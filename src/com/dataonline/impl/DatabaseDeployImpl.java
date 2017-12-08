@@ -1,4 +1,4 @@
-package com.fota.impl.business;
+package com.dataonline.impl;
 
 import java.io.File;
 import java.sql.Connection;
@@ -7,20 +7,18 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
-import com.fota.util.common.FileOperate;
-import com.fota.util.common.LineNo;
-import com.fota.intfc.business.IDatabaseDeploy;
-import com.fota.config.Database;
-import com.fota.config.Server;
-import com.fota.factory.base.*;
-import com.fota.intfc.base.*;
-import com.fota.pojo.base.User;
-import com.fota.service.business.DatabaseDeployService;
-import com.fota.util.error.ErrorCode;
+import com.dataonline.util.LineNo;
+import com.dataonline.intfc.IDatabaseDeploy;
+import com.dataonline.config.Database;
+import com.dataonline.factory.*;
+import com.dataonline.intfc.*;
+import com.dataonline.pojo.User;
+import com.dataonline.service.DatabaseDeployService;
+import com.dataonline.util.ErrorCode;
 
 public class DatabaseDeployImpl implements IDatabaseDeploy {
 	private Connection connection = null;
-	private Logger log = Logger.getLogger(DatabaseDeployService.class);
+	private Logger log = Logger.getLogger(DatabaseDeployImpl.class);
 	private String databaseName = "";
 	
 	public DatabaseDeployImpl(Connection connection, String databaseName) {
@@ -38,10 +36,6 @@ public class DatabaseDeployImpl implements IDatabaseDeploy {
 	    }
 
 	    reset(userName, password, dbName);
-	    
-	    if (!deleteVersions()) {
-	        log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "删除versions目录出错");
-	    }
 	    
         if (!oldDatabaseName.isEmpty() && !dropDataBase(oldDatabaseName)) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "删除数据库出错");

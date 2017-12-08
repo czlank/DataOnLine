@@ -1,5 +1,5 @@
 ﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ page import="com.fota.config.Database"%>
+<%@ page import="com.dataonline.config.Database"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
         <meta http-equiv="X-UA-Compatible" content="IE=9"/>
     
-        <title>Fota</title>
+        <title>DATA ON LINE</title>
         <!-- BOOTSTRAP STYLES-->
         <link href="../assets/css/bootstrap.css" rel="stylesheet"/>
         <!-- FONTAWESOME STYLES-->
@@ -103,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             <div class="row">
                 <div align="right" style="width:auto; height:auto; padding-right:auto; margin-right: 26.5%;">
-                    <input type="button" value="<%=btnText%>" class="btn btn-primary" onclick="FotaConfirm('重置数据库将丢失原来数据，是否继续？', submit_resetdb)"/>
+                    <input type="button" value="<%=btnText%>" class="btn btn-primary" onclick="MSGConfirm('重置数据库将丢失原来数据，是否继续？', submit_resetdb)"/>
                 </div>
             </div>
         </div>
@@ -122,8 +122,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="col-md-4 col-sm-4" style="height: 60%; width: 60%; left: 20%; top: 25%;">
                         <div class="panel panel-default" style="width: 572px; height: 346px;">
                             <div class="panel-heading" style="color:Black; text-align:left">
-                                <big class="step1"><strong>数据库部署&nbsp;-&nbsp;Step1/2&nbsp;&nbsp;&nbsp;&nbsp;请输入数据库用户名和密码</strong></big>
-                                <big class="step2" style="display: none"><strong>数据库部署&nbsp;-&nbsp;Step2/2&nbsp;&nbsp;&nbsp;&nbsp;请输入需要创建的数据库名</strong></big>
+                                <big class="step1"><strong>请输入数据库用户名和密码</strong></big>
+                                <big class="step2" style="display: none"><strong>请输入需要创建的数据库名</strong></big>
                             </div>
 
                             <div class="panel-body">
@@ -175,7 +175,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <!-- CUSTOM SCRIPTS -->
         <script src="../assets/js/custom.js"></script>
         <!-- msgbox -->
-        <script src="../assets/msgbox/fota.msg.js" language="JavaScript" type="text/javascript"></script>
+        <script src="../assets/msgbox/msg.js" language="JavaScript" type="text/javascript"></script>
 
         <script>
             document.body.onkeypress= function CheckEnter() {
@@ -202,12 +202,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 var dbPassword = document.getElementById("dbPassword").value;
                 
                 if ("" == dbusername) {
-                    FotaAlert("用户名不能为空！",function(){ $("#dbUserName").focus();});
+                    MSGAlert("用户名不能为空！",function(){ $("#dbUserName").focus();});
                     return;
                 }
                 
                 if ("" == dbPassword) {
-                    FotaAlert("密码不能为空！",function(){ $("#dbPassword").focus();});
+                    MSGAlert("密码不能为空！",function(){ $("#dbPassword").focus();});
                     return;
                 }
                 
@@ -226,7 +226,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 var dbName = document.getElementById("dbName").value;
                 
                 if ("" == dbName) {
-                    FotaAlert("数据库名不能为空！",function(){ $("#dbName").focus();});
+                    MSGAlert("数据库名不能为空！",function(){ $("#dbName").focus();});
                     return;
                 }
                 
@@ -242,7 +242,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     async: false,
                     error: function(request) { 
                         parent.hideLoading();
-                        FotaAlert("Connection error");  
+                        MSGAlert("Connection error");  
                     },  
                     success: function(data) {
                         onAjaxSuccess(data, "../login.jsp");
@@ -261,16 +261,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     }                   
                 } else if("logout" == Info.result){
                     parent.hideLoading();
-                    FotaAlert("登陆超时，请重新登录！",function(){
+                    MSGAlert("登陆超时，请重新登录！",function(){
                         window.location.href = "../login.jsp";
                     });                                
                 } else if ('error' == Info.result) {
                     parent.hideLoading();
-                    FotaAlert(Info.tipMsg); 
+                    MSGAlert(Info.tipMsg); 
                 } else if ('confirm' == Info.result) {
                     parent.hideLoading();
                     if($.isFunction(confirmHandler)){
-                        FotaConfirm(Info.tipMsg, confirmHandler);
+                        MSGConfirm(Info.tipMsg, confirmHandler);
                     }                    
                 }
             }

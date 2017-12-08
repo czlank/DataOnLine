@@ -9,17 +9,17 @@ import java.util.Vector;
 
 import com.dataonline.util.ErrorCode;
 import com.dataonline.util.GetLastError;
-import com.dataonline.intfc.IUser;
-import com.dataonline.intfc.UserOpt;
-import com.dataonline.pojo.User;
+import com.dataonline.intfc.IType;
+import com.dataonline.intfc.TypeOpt;
+import com.dataonline.pojo.Type;
 import com.dataonline.util.LineNo;
 
 import org.apache.log4j.Logger;
 
-public class UserImpl implements IUser {
-    private static String tableName = new String("user");
+public class TypeImpl implements IType {
+    private static String tableName = new String("type");
 
-    private Logger log = Logger.getLogger(UserImpl.class);
+    private Logger log = Logger.getLogger(TypeImpl.class);
     private Connection conn = null;
     private String databaseName = null;
     private ErrorCode lastError = ErrorCode.E_FAIL;
@@ -27,7 +27,7 @@ public class UserImpl implements IUser {
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
     
-    public UserImpl(Connection conn, String databaseName) {
+    public TypeImpl(Connection conn, String databaseName) {
         this.conn = conn;
         this.databaseName = databaseName;
     }
@@ -49,9 +49,9 @@ public class UserImpl implements IUser {
                 + tableName
                 + " ("
                 + "id INT NOT NULL AUTO_INCREMENT,"
-                + "type INT NOT NULL,"
-                + "name VARCHAR(256) NOT NULL UNIQUE,"
-                + "password VARCHAR(256),"
+                + "type INT NOT NULL UNIQUE,"
+                + "min DOUBLE NOT NULL,"
+                + "max DOUBLE NOT NULL,"
                 + "PRIMARY KEY (id)"
                 + ");";
 
@@ -87,7 +87,7 @@ public class UserImpl implements IUser {
     }
 
     @Override
-    public ErrorCode add(User user) throws SQLException {
+    public ErrorCode add(Type type) throws SQLException {
         int result = 0;
 
         lastError = ErrorCode.E_FAIL;
@@ -101,10 +101,10 @@ public class UserImpl implements IUser {
 
         String sql = "insert into "
                 + tableName
-                + " (type, name, password) values ("
-                + String.valueOf(user.getType()) + ", "
-                + "BINARY '" + user.getName() + "', "
-                + "'" + user.getPassword() + "'"
+                + " (type, min, max) values ("
+                + String.valueOf(type.getType()) + ", "
+                + String.valueOf(type.getMin()) + ", "
+                + String.valueOf(type.getMax())
                 + ")";
 
         pstmt = conn.prepareStatement(sql);
@@ -116,7 +116,7 @@ public class UserImpl implements IUser {
     }
 
     @Override
-    public ErrorCode update(User user) throws SQLException {
+    public ErrorCode update(Type type) throws SQLException {
         int result = 0;
 
         lastError = ErrorCode.E_FAIL;
@@ -128,7 +128,7 @@ public class UserImpl implements IUser {
             return lastError;
         }
 
-        String sql = getUpdateSql(user);
+        String sql = getUpdateSql(type);
         if (null == sql) {
             lastError = ErrorCode.E_OK;
             return lastError;
@@ -143,7 +143,7 @@ public class UserImpl implements IUser {
     }
 
     @Override
-    public ErrorCode remove(User user) throws SQLException {
+    public ErrorCode remove(Type type) throws SQLException {
         int result = 0;
 
         lastError = ErrorCode.E_FAIL;
@@ -158,7 +158,7 @@ public class UserImpl implements IUser {
         String sql = "delete from "
                 + tableName
                 + " where id="
-                + String.valueOf(user.getID());
+                + String.valueOf(type.getID());
 
         pstmt = conn.prepareStatement(sql);
         result = pstmt.executeUpdate(sql);
@@ -169,8 +169,8 @@ public class UserImpl implements IUser {
     }
 
     @Override
-    public Vector<User> query(User user) throws SQLException {
-        Vector<User> vecUser = null;
+    public Vector<Type> query(Type type) throws SQLException {
+        Vector<Type> vecType = null;
 
         lastError = ErrorCode.E_FAIL;
 
@@ -178,34 +178,34 @@ public class UserImpl implements IUser {
             lastError = ErrorCode.E_TABLE_NOT_EXIST;
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "表" + tableName + "不存在");
 
-            return vecUser;
+            return vecType;
         }
 
-        String sql = getQuerySql(user);
+        String sql = getQuerySql(type);
         if (null == sql) {
             lastError = ErrorCode.E_OK;
-            return vecUser;
+            return vecType;
         }
 
         pstmt = conn.prepareStatement(sql);
         rs = pstmt.executeQuery(sql);
 
-        vecUser = new Vector<User>();
+        vecType = new Vector<Type>();
 
         while (rs.next()) {
-            User userRS = new User();
+            Type typeRS = new Type();
 
-            userRS.setID(rs.getInt(1));
-            userRS.setType(rs.getInt(2));
-            userRS.setName(rs.getString(3));
-            userRS.setPassword(rs.getString(4));
+            typeRS.setID(rs.getInt(1));
+            typeRS.setType(rs.getInt(2));
+            typeRS.setMin(rs.getDouble(3));
+            typeRS.setMax(rs.getDouble(4));
 
-            vecUser.add(userRS);
+            vecType.add(typeRS);
         }
 
-        lastError = vecUser.isEmpty() ? ErrorCode.E_FAIL : ErrorCode.E_OK;
+        lastError = vecType.isEmpty() ? ErrorCode.E_FAIL : ErrorCode.E_OK;
 
-        return vecUser;
+        return vecType;
     }
 
     @Override
@@ -270,68 +270,76 @@ public class UserImpl implements IUser {
         return result;
     }
 
-    private String getUpdateSql(User user) {
-        if (UserOpt.O_NULL.get() == user.getOpt()) {
+    private String getUpdateSql(Type type) {
+        if (TypeOpt.O_NULL.get() == type.getOpt()) {
             return null;
         }
 
-        if (UserOpt.O_ALL.get() == user.getOpt()) {
+        if (TypeOpt.O_ALL.get() == type.getOpt()) {
             String sql = "update "
                     + tableName
                     
                     + "type="
-                    + String.valueOf(user.getType()) + ", "
+                    + type.getType() + ", "
                     
-                    + " set name=BINARY "
-                    + "'" + user.getName() + "', "
+                    + "min="
+                    + type.getMin() + ", "
                     
-                    + "password="
-                    + "'" + user.getPassword() + "' "
+                    + "max="
+                    + type.getMax() + " "
                     
                     + "where id="
-                    + String.valueOf(user.getID());
+                    + type.getID();
 
             return sql;
         }
 
         String sql = "update " + tableName + " set ";
 
-        if (testOpt(user.getOpt(), UserOpt.O_NAME)) {
-            sql += "name=BINARY '" + user.getName() + "', ";
+        if (testOpt(type.getOpt(), TypeOpt.O_TYPE)) {
+            sql += "type=" + type.getType() + ", ";
         }
 
-        if (testOpt(user.getOpt(), UserOpt.O_PASSWORD)) {
-            sql += "password='" + user.getPassword() + "', ";
+        if (testOpt(type.getOpt(), TypeOpt.O_MIN)) {
+            sql += "min=" + type.getMin() + ", ";
+        }
+        
+        if (testOpt(type.getOpt(), TypeOpt.O_MAX)) {
+            sql += "max=" + type.getMax() + ", ";
         }
 
         sql = sql.substring(0, sql.lastIndexOf(", "));
-        sql += " where id=" + String.valueOf(user.getID());
+        sql += " where id=" + type.getID();
 
         return sql;
     }
 
-    private String getQuerySql(User user) {
-        if (UserOpt.O_NULL.get() == user.getOpt()) {
+    private String getQuerySql(Type type) {
+        if (TypeOpt.O_NULL.get() == type.getOpt()) {
             return null;
         }
         
         String sql = "select * from " + tableName + " where ";
         
-        if (UserOpt.O_ALL.get() == user.getOpt()) {
+        if (TypeOpt.O_ALL.get() == type.getOpt()) {
             sql = "select * from " + tableName ;
             return sql;
         }
 
-        if (testOpt(user.getOpt(), UserOpt.O_ID)) {
-            sql += "id=" + user.getID() + " and ";
+        if (testOpt(type.getOpt(), TypeOpt.O_ID)) {
+            sql += "id=" + type.getID() + " and ";
         }
         
-        if (testOpt(user.getOpt(), UserOpt.O_TYPE)) {
-            sql += "type=" + user.getType() + " and ";
+        if (testOpt(type.getOpt(), TypeOpt.O_TYPE)) {
+            sql += "type=" + type.getType() + " and ";
         }
 
-        if (testOpt(user.getOpt(), UserOpt.O_NAME)) {
-            sql += "name= BINARY '" + user.getName() + "' and ";
+        if (testOpt(type.getOpt(), TypeOpt.O_MIN)) {
+            sql += "min=" + type.getMin() + " and ";
+        }
+        
+        if (testOpt(type.getOpt(), TypeOpt.O_MAX)) {
+            sql += "max=" + type.getMax() + " and ";
         }
 
         sql = sql.substring(0, sql.lastIndexOf(" and "));
@@ -339,7 +347,7 @@ public class UserImpl implements IUser {
         return sql;
     }
 
-    private boolean testOpt(int srcopt, UserOpt destopt) {
+    private boolean testOpt(int srcopt, TypeOpt destopt) {
         return ((srcopt & destopt.get()) == destopt.get());
     }
     

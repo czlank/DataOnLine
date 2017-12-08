@@ -1,4 +1,4 @@
-package com.fota.filters;
+package com.dataonline.filters;
 
 import java.io.IOException;
 
@@ -16,9 +16,8 @@ import net.sf.json.util.JSONStringer;
 
 import org.apache.log4j.Logger;
 
-import com.fota.config.Server;
-import com.fota.util.error.ErrorCode;
-import com.fota.util.error.GetLastError;
+import com.dataonline.util.ErrorCode;
+import com.dataonline.util.GetLastError;
 
 @WebFilter(
     description = "manager目录登录过滤器",
@@ -38,11 +37,6 @@ public class ManagerFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest)request;
         HttpServletResponse resp = (HttpServletResponse)response;
         String userName = (String)req.getSession().getAttribute("username");
-
-        Server xml = new Server("config.xml");
-        
-        boolean bServerMaintenance = xml.getStatus();
-        boolean bAdmin = userName != null && userName.equals("admin");
         
         if (null == userName && !(req.getServletPath().indexOf("login.jsp") > 0)) {
             log.debug("请求被" + filterName + "过滤");
@@ -51,9 +45,6 @@ public class ManagerFilter implements Filter {
             }else{
                 resp.sendRedirect(req.getContextPath() + "/login.jsp");
             }
-        } else if (bServerMaintenance && !bAdmin){
-            log.debug("请求被" + filterName + "过滤");
-            resp.sendRedirect(req.getContextPath() + "/maintenance/ServerUnderMaintenance.jsp");
         } else {
             chain.doFilter(request, response);
         }

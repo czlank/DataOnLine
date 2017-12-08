@@ -7,20 +7,20 @@ import org.apache.log4j.Logger;
 
 import com.dataonline.db.Connector;
 import com.dataonline.util.ErrorCode;
-import com.dataonline.intfc.IUser;
-import com.dataonline.impl.UserImpl;
-import com.dataonline.pojo.User;
+import com.dataonline.intfc.IType;
+import com.dataonline.impl.TypeImpl;
+import com.dataonline.pojo.Type;
 import com.dataonline.util.LineNo;
 
-public class UserService implements IUser {
+public class TypeService implements IType {
     private Connector dbc = null;
-    private IUser intfc = null;
+    private IType intfc = null;
     
-    private Logger log = Logger.getLogger(UserService.class);
+    private Logger log = Logger.getLogger(TypeService.class);
 
-    public UserService(String databaseName, String user, String password) throws Exception {
+    public TypeService(String databaseName, String user, String password) throws Exception {
         dbc = new Connector(databaseName, user, password);
-        intfc = new UserImpl(dbc.getConnection(), databaseName);
+        intfc = new TypeImpl(dbc.getConnection(), databaseName);
     }
 
     @Override
@@ -31,8 +31,8 @@ public class UserService implements IUser {
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
-            UserImpl userImpl = (UserImpl)intfc;
-            userImpl.closePstmt();
+            TypeImpl typeImpl = (TypeImpl)intfc;
+            typeImpl.closePstmt();
         }
 
         return result;
@@ -46,83 +46,83 @@ public class UserService implements IUser {
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
-            UserImpl userImpl = (UserImpl)intfc;
-            userImpl.closePstmt();
+        	TypeImpl typeImpl = (TypeImpl)intfc;
+            typeImpl.closePstmt();
         }
 
         return result;
     }
 
     @Override
-    public ErrorCode add(User user) throws SQLException {
+    public ErrorCode add(Type type) throws SQLException {
         ErrorCode result = null;
 
         try {
-            result = intfc.add(user);
+            result = intfc.add(type);
         } catch (SQLException e) {
             if (e.getMessage().contains("Duplicate entry")) {
                 result = ErrorCode.E_DUPLICATE_ENTRY;
 
-                UserImpl userImpl = (UserImpl)intfc;
-                userImpl.setLastError(result);
+                TypeImpl typeImpl = (TypeImpl)intfc;
+                typeImpl.setLastError(result);
             }
 
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
-            UserImpl userImpl = (UserImpl)intfc;
-            userImpl.closePstmt();
+        	TypeImpl typeImpl = (TypeImpl)intfc;
+        	typeImpl.closePstmt();
         }
 
         return result;
     }
 
     @Override
-    public ErrorCode update(User user) throws SQLException {
+    public ErrorCode update(Type type) throws SQLException {
         ErrorCode result = null;
 
         try {
-            result = intfc.update(user);
+            result = intfc.update(type);
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
-            UserImpl userImpl = (UserImpl)intfc;
-            userImpl.closePstmt();
+        	TypeImpl typeImpl = (TypeImpl)intfc;
+        	typeImpl.closePstmt();
         }
 
         return result;
     }
 
     @Override
-    public ErrorCode remove(User user) throws SQLException {
+    public ErrorCode remove(Type type) throws SQLException {
         ErrorCode result = null;
 
         try {
-            result = intfc.remove(user);
+            result = intfc.remove(type);
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
-            UserImpl userImpl = (UserImpl)intfc;
-            userImpl.closePstmt();
+        	TypeImpl typeImpl = (TypeImpl)intfc;
+        	typeImpl.closePstmt();
         }
 
         return result;
     }
 
     @Override
-    public Vector<User> query(User user) throws SQLException {
-        Vector<User> vecUser = null;
+    public Vector<Type> query(Type type) throws SQLException {
+        Vector<Type> vecType = null;
 
         try {
-            vecUser = intfc.query(user);
+        	vecType = intfc.query(type);
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
-            UserImpl userImpl = (UserImpl)intfc;
-            userImpl.closeRs();
-            userImpl.closePstmt();
+        	TypeImpl typeImpl = (TypeImpl)intfc;
+        	typeImpl.closeRs();
+        	typeImpl.closePstmt();
         }
 
-        return vecUser;
+        return vecType;
     }
 
     @Override

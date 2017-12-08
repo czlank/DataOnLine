@@ -1,8 +1,8 @@
-package com.fota.service.business;
+package com.dataonline.service;
 
-import com.fota.db.Connector;
-import com.fota.impl.business.DatabaseDeployImpl;
-import com.fota.intfc.business.IDatabaseDeploy;
+import com.dataonline.db.Connector;
+import com.dataonline.impl.DatabaseDeployImpl;
+import com.dataonline.intfc.IDatabaseDeploy;
 
 public class DatabaseDeployService implements IDatabaseDeploy {
 	private Connector dbc = null;

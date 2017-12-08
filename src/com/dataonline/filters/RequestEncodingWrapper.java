@@ -1,4 +1,4 @@
-package com.fota.filters;
+package com.dataonline.filters;
 
 import java.io.UnsupportedEncodingException;
 
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.apache.log4j.Logger;
 
-import com.fota.util.common.LineNo;
+import com.dataonline.util.LineNo;
 
 public class RequestEncodingWrapper extends HttpServletRequestWrapper{
     private Logger log = Logger.getLogger(RequestEncodingWrapper.class);

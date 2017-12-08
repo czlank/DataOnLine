@@ -1,4 +1,4 @@
-package com.fota.util.common;
+package com.dataonline.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

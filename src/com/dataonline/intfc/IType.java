@@ -4,20 +4,20 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import com.dataonline.util.ErrorCode;
-import com.dataonline.pojo.User;
+import com.dataonline.pojo.Type;
 
-public interface IUser {
+public interface IType {
     public ErrorCode create() throws SQLException;
 
     public ErrorCode drop() throws SQLException;
 
-    public ErrorCode add(User user) throws SQLException;
+    public ErrorCode add(Type type) throws SQLException;
 
-    public ErrorCode update(User user) throws SQLException;
+    public ErrorCode update(Type type) throws SQLException;
 
-    public ErrorCode remove(User user) throws SQLException;
+    public ErrorCode remove(Type type) throws SQLException;
 
-    public Vector<User> query(User user) throws SQLException;
+    public Vector<Type> query(Type type) throws SQLException;
 
     public String getLastError();
     

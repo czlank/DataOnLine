@@ -1,4 +1,4 @@
-package com.fota.impl.base;
+package com.dataonline.impl;
 
 public enum UserTypeOpt {
     ADMINISTRATOR(0),

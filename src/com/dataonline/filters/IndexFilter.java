@@ -1,4 +1,4 @@
-package com.fota.filters;
+package com.dataonline.filters;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
 )
 
 public class IndexFilter implements Filter {
-    private static Logger log = Logger.getLogger(ManagerFilter.class);
+    private static Logger log = Logger.getLogger(IndexFilter.class);
     private String filterName = new String();
     
     public void init(FilterConfig filterConfig) throws ServletException {

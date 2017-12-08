@@ -1,4 +1,4 @@
-package com.fota.db;
+package com.dataonline.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
-import com.fota.util.common.LineNo;
+import com.dataonline.util.LineNo;
 
 public class Connector {
     private static final String Driver = "com.mysql.jdbc.Driver";
