@@ -1,4 +1,4 @@
-package com.fota.util.common;
+package com.dataonline.util;
 
 public class LineNo {
     public static int getLineNumber() {

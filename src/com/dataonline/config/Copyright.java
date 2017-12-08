@@ -1,6 +1,6 @@
-package com.fota.config;
+package com.dataonline.config;
 
-import com.fota.util.common.XML;
+import com.dataonline.util.XML;
 
 public class Copyright extends BuildXMLFile {
     public Copyright(String fileName) {

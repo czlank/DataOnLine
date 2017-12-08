@@ -1,4 +1,4 @@
-package com.fota.util.common;
+package com.dataonline.util;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -12,8 +12,6 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.apache.log4j.Logger;
-
-import com.fota.util.common.LineNo;
 
 public class XML {
     private Logger log = Logger.getLogger(XML.class);

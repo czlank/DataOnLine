@@ -1,4 +1,4 @@
-package com.dataonline.tag.index;
+package com.dataonline.tag;
 
 import java.io.IOException;
 

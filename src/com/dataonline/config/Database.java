@@ -1,6 +1,6 @@
-﻿package com.fota.config;
+﻿package com.dataonline.config;
 
-import com.fota.util.common.XML;
+import com.dataonline.util.XML;
 
 public class Database extends BuildXMLFile {
     public Database(String fileName) {

@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
         <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 
-        <title>Fota - SANECHIPS</title>
+        <title>DATA ON LINE</title>
         <link rel="shortcut icon" type="image/ico" href="favicon.ico">
         <!-- BOOTSTRAP STYLES-->
         <link href="assets/css/bootstrap.css" rel="stylesheet"/>
@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.jsp">SANECHIPS</a>
+                    <a class="navbar-brand" href="index.jsp">DATA ON LINE</a>
                 </div>
 
                 <div class="navbar-right">
@@ -52,6 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </li>
 
                         <idx:menu/>
+                        
                     </ul>
                 </div>
             </nav>
@@ -89,24 +90,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             $(this).next('ul').slideToggle();
                         }
                         var href = $(this).find("a").attr('href');
-                        if (href != null && "Project.html" == href) {
-                            href = "manager/ProjectManager.jsp";
-                        } else if (href != null && "Version.html" == href) {
-                            href = "manager/VersionManager.jsp";
-                        } else if (href != null && "VersionConfig.html" == href) {
-                            href = "manager/VersionConfig.jsp";
+                        if (href != null && "Default.html" == href) {
+                            href = "manager/Default.jsp";
                         } else if (href != null && "User.html" == href) {
                             href = "manager/UserManager.jsp";
                         } else if (href != null && "Database.html" == href) {
                             href = "maintenance/DatabaseManager.jsp";
-                        } else if (href != null && "Server.html" == href) {
-                            href = "maintenance/ServerManager.jsp";
-                        } else if (href != null && "Statistics.html" == href) {
-                            href = "manager/Statistics.jsp";
-                        } else if (href != null && "Record.html" == href) {
-                        	href = "manager/Record.jsp";
                         } else {
-                            href = "manager/ProjectManager.jsp";
+                            href = "manager/Default.jsp";
                         }
                         
                         document.getElementById('pageContent').src = href;
@@ -182,19 +173,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   if (obj.hasOwnProperty(key)) size++;
                 }
                 return size;
-            }
-            
-            //记录version页面搜索字段
-            var verSearchText = '';
-            //记录project页面搜索字段
-            var prjSearchText = '';
-            //记录统计页面搜索字段
-            var staSearchText = {};
-            function saveSearchText(val){
-                verSearchText =  val;
-            }
-            function resetSearchText(){
-                verSearchText =  '';
             }
         </script>
     </body>

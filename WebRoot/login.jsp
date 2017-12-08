@@ -12,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
         <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 
-        <title>SaneChips - FOTA</title>
+        <title>DATA ON LINE</title>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
         <!-- BOOTSTRAP STYLES-->
         <link href="assets/css/bootstrap.css" rel="stylesheet"/>
@@ -28,7 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="row text-center">
                 <div class="col-md-12">
                     <br/><br/>
-                    <h2>FOTA</h2>
+                    <h2>DATA ON LINE</h2>
 
                     <h5>&nbsp;</h5>
                     <br/>
@@ -73,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <!-- BOOTSTRAP SCRIPTS -->
         <script src="assets/js/bootstrap.min.js"></script>  
         <script src="assets/msgbox/msg.box.js"></script>      
-        <script src="assets/msgbox/fota.msg.js" language="JavaScript" type="text/javascript"></script>
+        <script src="assets/msgbox/msg.js" language="JavaScript" type="text/javascript"></script>
         
         <script type="text/javascript">
             history.go(1);
