@@ -18,7 +18,7 @@
         <!-- CUSTOM STYLES-->
         <link href="../assets/css/custom.css" rel="stylesheet" />
 
-        <script src="../assets/msgbox/fota.msg.js" language="JavaScript" type="text/javascript"></script>
+        <script src="../assets/msgbox/msg.js" language="JavaScript" type="text/javascript"></script>
     </head>
 
     <body>
@@ -41,24 +41,20 @@
                                 <label>密码</label>
                                 <input class="form-control" id="userPassword" name="userPassword" maxlength="256" title="最多可输入256个字符"/>
                             </div>
-
-                            <div class="form-group" id="manufacturerGroup">
-                                <label>厂商</label>
-                                <input class="form-control" id="userManufacturer" name="userManufacturer" maxlength="256" title="最多可输入256个字符"></input>
+                            
+                            <div class="form-group" id="nodesGroup">
+                                <label>节点</label>
+                                <textarea class="form-control" rows="3" id="userNodes" name="userNodes" maxlength="2048" title="最多可输入2048个字符"></textarea>
                             </div>
-
-                            <div class="form-group" id="tokenGroup">
-                                <label>标记</label>
-                                <input class="form-control" id="userToken" name="userToken" maxlength="256" title="最多可输入256个字符"/>
-                            </div>
-                                <input type="hidden" name="userId" id="userId" />
-                                <input type="hidden" name="actionUser" id="actionUser"/>
+                            
+                            <input type="hidden" name="userId" id="userId" />
+                            <input type="hidden" name="actionUser" id="actionUser"/>
                         </form>
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" onclick="save_user()">保存</button>
+                        <button type="button" class="btn btn-primary" onclick="saveUser()">保存</button>
                     </div>
                 </div>
             </div>
@@ -75,16 +71,13 @@
         <script src="../assets/js/custom.js"></script>
 
         <script>
-            function save_user() {
+            function saveUser() {
                 if ('addUser' == $("#actionUser").val()) {
                     if ($("#userName").val() == '') {
-                        FotaAlert("请填写账户名称!");
+                        MSGAlert("请填写账户名称!");
                         return;
-                    } else if ($("#userName").val() == '') {
-                        FotaAlert("请填写密码!");
-                        return;
-                    } else if ($("#userManufacturer").val() == '') {
-                    	FotaAlert("请填写厂商!");
+                    } else if ($("#userPassword").val() == '') {
+                        MSGAlert("请填写密码!");
                         return;
                     }
                 }
@@ -94,17 +87,17 @@
             function userSubmit() {
                 parent.showLoading();
                 $.ajax({
-                            type: "POST",
-                            url:"UserEdit.html",
-                            data:$("#userEditForm").serialize(),
-                            async: false,
-                            error: function(request) {
-                                parent.hideLoading();
-                                FotaAlert("Connection error");
-                            },
-                            success: function(data) {
-                                onAjaxSuccess(data, "../manager/UserManager.jsp");
-                            }
+                        type : "POST",
+                        url : "UserEdit.html",
+                        data : $("#userEditForm").serialize(),
+                        async : false,
+                        error : function(request) {
+                            parent.hideLoading();
+                            MSGAlert("Connection error");
+                        },
+                        success: function(data) {
+                            onAjaxSuccess(data, "../manager/UserManager.jsp");
+                        }
                     });
             }
         </script>

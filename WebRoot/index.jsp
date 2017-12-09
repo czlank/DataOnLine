@@ -159,6 +159,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             function showLoading() {
                 $('#loading').show();
             }
+            
             function hideLoading() {
                 $('#loading').hide();
             }
@@ -167,6 +168,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             function jsonDecode(string){
                 return string.replace(/<br>/g, "\r\n").replace(/&quot;/g, "\"");
             }
+            
             function JSONLength(obj) {
                 var size = 0, key;
                 for (key in obj) {

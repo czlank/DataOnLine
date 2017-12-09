@@ -1,5 +1,4 @@
 ﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ page import="com.fota.pojo.base.Project"%>
 <%@ taglib prefix="user" uri="/user-tags"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -33,7 +32,7 @@
                     <h2>账户管理</h2>
                     <div>
                         <div align="right">
-                            <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editUser" onclick="showUser('usrAdd', -1)">添加账户</a>
+                            <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editUser" onclick="showUser('userAdd', -1)">添加账户</a>
                         </div>
 
                         <jsp:include page="UserMaintenance.jsp"/>
@@ -97,45 +96,46 @@
             var usrID = -1;
             var usrName = '';
             function showUser(action, idx) {
-                if ("usrAdd" == action) {
+                if ("userAdd" == action) {
                     document.getElementById("editUserTitle").innerHTML = "<font face=宋体 color=#23ADCF size=4>添加账户</font>";
-                    $("#tokenGroup").css("display","none");
                     
-                    $("#manufacturerGroup").css("display","block");
-                    $("#passwordGroup").css("display","block");
-               
+                    $("#passwordGroup").css("display", "block");
+                    $("#nodesGroup").css("display", "block");
+                    
                     document.getElementById("userName").removeAttribute("readOnly");
                     document.getElementById("userName").style.backgroundColor = "#FFF";
-                    document.getElementById("userName").value = ""; 
+                    document.getElementById("userName").value = "";
+                    
                     document.getElementById("userPassword").value = "";
                     document.getElementById("userManufacturer").value = "";
+                    
                     document.getElementById("actionUser").value = "addUser";
-                } else if ("usrEdit" == action) {
+                } else if ("userEdit" == action) {
                 	document.getElementById("editUserTitle").innerHTML = "<font face=宋体 color=#23ADCF size=4>修改账户信息</font>";
-                	$("#passwordGroup").css("display","none");
-                    $("#tokenGroup").css("display","none");
-                    $("#manufacturerGroup").css("display","block");
+                	
+                	$("#passwordGroup").css("display", "none");
+                    $("#nodesGroup").css("display", "block");
                 	
                 	var nameObj = document.getElementById("userName");
-                    nameObj.setAttribute("readOnly",true);
-                    nameObj.style.backgroundColor="#d2d2d2";
+                    nameObj.setAttribute("readOnly", true);
+                    nameObj.style.backgroundColor = "#d2d2d2";
                 	
                     var jsUser = '${jsonUser}';
                     var jsonVector = eval("(" + jsUser + ")");                    
 
                     nameObj.value = parent.jsonDecode(jsonVector[idx]["userName"]);
-                    document.getElementById("userManufacturer").value = parent.jsonDecode(jsonVector[idx]["oem"]);
-                    document.getElementById("userToken").value  = parent.jsonDecode(jsonVector[idx]["token"]);
+                    document.getElementById("userNodes").value = parent.jsonDecode(jsonVector[idx]["nodes"]);
+                    
                     document.getElementById("actionUser").value = "editUser";
-                    document.getElementById("userId").value     = jsonVector[idx]["id"];
-                } else if ("resetPassword" == action){
+                    document.getElementById("userId").value = jsonVector[idx]["id"];
+                } else if ("userResetPassword" == action){
                 	document.getElementById("editUserTitle").innerHTML = "<font face=宋体 color=#23ADCF size=4>重置密码</font>";
-                	$("#manufacturerGroup").css("display","none");
-                	$("#tokenGroup").css("display","none");
-                    $("#passwordGroup").css("display","block");
+                    
+                	$("#passwordGroup").css("display", "block");
+                    $("#nodesGroup").css("display", "none");
                 	
                 	var nameObj = document.getElementById("userName");
-                    nameObj.setAttribute("readOnly",true);
+                    nameObj.setAttribute("readOnly", true);
                     nameObj.style.backgroundColor = "#d2d2d2";
                     
                     var jsUser = '${jsonUser}';
@@ -143,28 +143,31 @@
 
                     nameObj.value = parent.jsonDecode(jsonVector[idx]["userName"]);
                     document.getElementById("userPassword").value = "";
-                    document.getElementById("actionUser").value = "resetPassword";
+                    
+                    document.getElementById("actionUser").value = "userResetPassword";
                     document.getElementById("userId").value    = jsonVector[idx]["id"];
                 }
             }
             
-            function deleteUser(userId,userName) {
+            function deleteUser(userId, userName) {
                 usrID = userId;
                 usrName = userName;
-                FotaAlert("删除账号操作会同时删除该账号下所有数据且不可恢复!", confirmDelUser);                
+                MSGAlert("删除账号操作将删除该账号下所有数据且不可恢复!", confirmDelUser);                
             }
+            
             function confirmDelUser(tp) {
                if (tp != 'ok') {
                    return;
                 }
                 
-                FotaConfirm("是否删除账号？", function (tp) {
+                MSGConfirm("是否删除账号？", function (tp) {
                     if (tp == 'ok'){
-                        deleteAct();
+                        deleteAction();
                     }
                 });
             }
-            function deleteAct() {
+            
+            function deleteAction() {
                 parent.showLoading();
                 $.ajax({
                     type: "POST",
@@ -196,16 +199,16 @@
                     }                   
                 } else if("logout" == Info.result){
                     parent.hideLoading();
-                    FotaAlert("登陆超时，请重新登录！",function(){
+                    MSGAlert("登陆超时，请重新登录！",function(){
                         window.location.href = "../login.jsp";
                     });                                
                 } else if ('error' == Info.result) {
                     parent.hideLoading();
-                    FotaAlert(Info.tipMsg); 
+                    MSGAlert(Info.tipMsg); 
                 } else if ('confirm' == Info.result) {
                     parent.hideLoading();
                     if($.isFunction(confirmHandler)){
-                        FotaConfirm(Info.tipMsg, confirmHandler);
+                        MSGConfirm(Info.tipMsg, confirmHandler);
                     }                    
                 }
             }

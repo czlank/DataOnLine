@@ -85,6 +85,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     FotaAlert(errInfo,function(){ $("#username").focus(); });
                 }
             };
+            
             function login(){
                 if($("#username").val() == "" || $("#username").val() == null){
                     FotaAlert("请输入账号");
@@ -97,9 +98,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             function showLoading() {
                 $('#loading').show();
             }
+            
             function hideLoading() {
                 $('#loading').hide();
-            }   
+            }
+            
             //判断当前窗口是否有顶级窗口，如果有就让当前的窗口的地址栏发生变化，    
             //这样就可以让登陆窗口显示在整个窗口了    
             function loadTopWindow(){    
