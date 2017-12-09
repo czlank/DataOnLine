@@ -29,5 +29,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-io-1.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-logging.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jaxen-1.1-beta-6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ezmorph-1.0.6.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

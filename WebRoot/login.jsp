@@ -55,7 +55,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <input type="hidden" name="action" value="login">
                                 <input type="hidden" id="errorResult" value="<%=request.getAttribute("error")%>" >
                                 <div align="center">
-                                    <input type="submit" value="登录" onclick="login()" class="btn btn-primary"/>
+                                    <input type="submit" value="登录" onclick="login()" class="btn btn-danger"/>
                                 </div>
                             </form>
                         </div>

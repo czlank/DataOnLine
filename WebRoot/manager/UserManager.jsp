@@ -32,7 +32,7 @@
                     <h2>账户管理</h2>
                     <div>
                         <div align="right">
-                            <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editUser" onclick="showUser('userAdd', -1)">添加账户</a>
+                            <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#editUser" onclick="showUser('userAdd', -1)">添加账户</a>
                         </div>
 
                         <jsp:include page="UserMaintenance.jsp"/>
@@ -47,7 +47,7 @@
                     <!-- 账号表开始 -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <font face=宋体 color=#23ADCF size=5>账户</font>
+                            <font face=宋体 color=#E90000 size=5>账户</font>
                         </div>
 
                         <div class="panel-body">

@@ -103,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             <div class="row">
                 <div align="right" style="width:auto; height:auto; padding-right:auto; margin-right: 26.5%;">
-                    <input type="button" value="<%=btnText%>" class="btn btn-primary" onclick="MSGConfirm('重置数据库将丢失原来数据，是否继续？', submit_resetdb)"/>
+                    <input type="button" value="<%=btnText%>" class="btn btn-danger" onclick="MSGConfirm('重置数据库将丢失原来数据，是否继续？', submit_resetdb)"/>
                 </div>
             </div>
         </div>
@@ -150,11 +150,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <br/><br/>
 
                                 <div align="right" class="step1" id="step1But">
-                                    <input type="button" name="nextStep" value="下一步" class="btn btn-primary" style="width: 104px; margin-right: 1px; margin-bottom:-1px;" onclick="step1_next()"/>
+                                    <input type="button" name="nextStep" value="下一步" class="btn btn-danger" style="width: 104px; margin-right: 1px; margin-bottom:-1px;" onclick="step1_next()"/>
                                 </div>
                                 <div align="right" class="step2"  style="display: none" id="step2But">
-                                    <input type="button" name= "prevStep" value="上一步" class="btn btn-primary" style="width: 83px; margin-bottom: 0px;" onclick="step2_pre()"/>
-                                    <input type="button" name= "nextStep" value="配置" class="btn btn-primary" style="width: 76px; margin-right: 2px; margin-bottom: 0px;" onclick="step2_submit()"/>
+                                    <input type="button" name= "prevStep" value="上一步" class="btn btn-danger" style="width: 83px; margin-bottom: 0px;" onclick="step2_pre()"/>
+                                    <input type="button" name= "nextStep" value="配置" class="btn btn-danger" style="width: 76px; margin-right: 2px; margin-bottom: 0px;" onclick="step2_submit()"/>
                                 </div>
                             </div>
                         </div>
