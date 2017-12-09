@@ -1,20 +1,17 @@
 package com.dataonline.impl;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
-import com.dataonline.util.LineNo;
-import com.dataonline.intfc.IDatabaseDeploy;
-import com.dataonline.config.Database;
 import com.dataonline.factory.*;
 import com.dataonline.intfc.*;
+import com.dataonline.config.Database;
 import com.dataonline.pojo.User;
-import com.dataonline.service.DatabaseDeployService;
 import com.dataonline.util.ErrorCode;
+import com.dataonline.util.LineNo;
 
 public class DatabaseDeployImpl implements IDatabaseDeploy {
 	private Connection connection = null;
@@ -150,27 +147,15 @@ public class DatabaseDeployImpl implements IDatabaseDeploy {
 	
 	private boolean createTable(String userName, String password, String dbName) {
 		IUser userService = BaseFactory.getInstance().getUser();
-		IProject projectService = BaseFactory.getInstance().getProject();
-		IVersion versionService = BaseFactory.getInstance().getVersion();
-		IRecord recordService = BaseFactory.getInstance().getRecord();
+		IType typeService = BaseFactory.getInstance().getType();
 		
 		if (null == userService) {
 		    log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "获取IUser接口失败");
             return false;
 		}
 		
-		if (null == projectService) {
-            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "获取IProject接口失败");
-            return false;
-        }
-		
-		if (null == versionService) {
-            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "获取IVersion接口失败");
-            return false;
-        }
-		
-		if (null == recordService) {
-            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "获取IRecord接口失败");
+		if (null == typeService) {
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "获取IType接口失败");
             return false;
         }
 		
@@ -182,29 +167,17 @@ public class DatabaseDeployImpl implements IDatabaseDeploy {
 			
 		    User user = new User();
 	        
+		    user.setType(UserTypeOpt.ADMINISTRATOR.get());
 	        user.setName("admin");
 	        user.setPassword("admin");
-	        user.setToken("admin");
-	        user.setType(0);
-	        user.setOEM("admin");
 		    
 		    if (userService.add(user) != ErrorCode.E_OK) {
 		        log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "添加用户失败");
 		    	return false;
 		    }
 
-		    if (projectService.create() != ErrorCode.E_OK) {
-	            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "创建项目表失败");
-		        return false;
-		    }
-		    
-		    if (versionService.create() != ErrorCode.E_OK) {
-		        log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "创建版本表失败");
-		        return false;
-		    }
-		    
-		    if (recordService.create() != ErrorCode.E_OK) {
-		        log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "创建日志表失败");
+		    if (typeService.create() != ErrorCode.E_OK) {
+	            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "创建类型表失败");
 		        return false;
 		    }
 		} catch (SQLException e) {
@@ -213,9 +186,7 @@ public class DatabaseDeployImpl implements IDatabaseDeploy {
 		} finally {
 		    try {
                 userService.destroy();
-                projectService.destroy();
-                versionService.destroy();
-                recordService.destroy();
+                typeService.destroy();
             } catch (SQLException e) {
                 log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
             }
@@ -238,18 +209,4 @@ public class DatabaseDeployImpl implements IDatabaseDeploy {
 	    Database xml = new Database("config.xml");
         xml.setFlag(flag);
 	}
-	
-	private boolean deleteVersions() {
-        Server xml = new Server("config.xml");
-        String rootpath = xml.getRootPath();
-        String sPath = rootpath + "Versions";
-        
-        boolean bRet = FileOperate.deleteFolder(sPath);
-        if (bRet) {
-            File dir = new File(sPath + File.separator);
-            bRet = dir.mkdir();
-        }
-        
-        return bRet;
-    }
 }

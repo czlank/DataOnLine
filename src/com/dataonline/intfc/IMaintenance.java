@@ -3,8 +3,7 @@ package com.dataonline.intfc;
 import java.util.Vector;
 
 import com.dataonline.util.ErrorCode;
-import com.dataonline.pojo.User;
-import com.dataonline.pojo.Type;
+import com.dataonline.pojo.*;
 
 public interface IMaintenance {
     public ErrorCode userAdd(User user);
@@ -21,7 +20,7 @@ public interface IMaintenance {
 
     public ErrorCode typeRemove(Type type);
     
-    public ErrorCode typeRemove(User user);
+    public Vector<Type> typeQuery(Type type);
     
-    public Vector<Type> projectQuery(Type type);
+    public Vector<Value> valueQuery(int userID, Value value);
 }

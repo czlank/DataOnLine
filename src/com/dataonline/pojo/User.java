@@ -9,6 +9,7 @@ public class User {
     private int type         = 0;
     private String name      = new String();
     private String password  = new String();
+    private String nodes	 = new String();
     
     public User() {
         
@@ -19,6 +20,11 @@ public class User {
     }
 
     public void clearOpt(int opt) {
+    	if (opt == UserOpt.O_ALL.get()) {
+    		this.opt = UserOpt.O_NULL.get();
+    		return;
+    	}
+    	
         this.opt &= ~(opt);
     }
 
@@ -56,5 +62,13 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+    
+    public void setNodes(String nodes) {
+    	this.nodes = nodes;
+    }
+    
+    public String getNodes() {
+    	return nodes;
     }
 }

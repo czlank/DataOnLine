@@ -1,4 +1,4 @@
-﻿package com.fota.action.business;
+﻿package com.dataonline.action;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,12 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.util.JSONStringer;
 import org.apache.log4j.Logger;
 
-import com.fota.factory.business.DatabaseDeployFactory;
-import com.fota.intfc.business.IDatabaseDeploy;
-import com.fota.util.common.LineNo;
+import com.dataonline.factory.DatabaseDeployFactory;
+import com.dataonline.intfc.IDatabaseDeploy;
+import com.dataonline.util.LineNo;
 
-import com.fota.util.error.ErrorCode;
-import com.fota.util.error.GetLastError;
+import com.dataonline.util.ErrorCode;
+import com.dataonline.util.GetLastError;
+
 @WebServlet(
     urlPatterns = { "/manager/DatabaseDeploy.html" },
     name = "DatabaseDeploy"

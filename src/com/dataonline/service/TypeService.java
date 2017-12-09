@@ -10,6 +10,7 @@ import com.dataonline.util.ErrorCode;
 import com.dataonline.intfc.IType;
 import com.dataonline.impl.TypeImpl;
 import com.dataonline.pojo.Type;
+import com.dataonline.manager.BaseSyncManager;
 import com.dataonline.util.LineNo;
 
 public class TypeService implements IType {
@@ -27,12 +28,15 @@ public class TypeService implements IType {
     public ErrorCode create() throws SQLException {
         ErrorCode result = null;
         try {
+        	BaseSyncManager.getInstance().rwLock();
             result = intfc.create();
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
             TypeImpl typeImpl = (TypeImpl)intfc;
             typeImpl.closePstmt();
+            
+            BaseSyncManager.getInstance().rwUnLock();
         }
 
         return result;
@@ -42,12 +46,15 @@ public class TypeService implements IType {
     public ErrorCode drop() throws SQLException {
         ErrorCode result = null;
         try {
+        	BaseSyncManager.getInstance().rwLock();
             result = intfc.drop();
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
         	TypeImpl typeImpl = (TypeImpl)intfc;
             typeImpl.closePstmt();
+            
+            BaseSyncManager.getInstance().rwUnLock();
         }
 
         return result;
@@ -58,6 +65,7 @@ public class TypeService implements IType {
         ErrorCode result = null;
 
         try {
+        	BaseSyncManager.getInstance().rwLock();
             result = intfc.add(type);
         } catch (SQLException e) {
             if (e.getMessage().contains("Duplicate entry")) {
@@ -71,6 +79,8 @@ public class TypeService implements IType {
         } finally {
         	TypeImpl typeImpl = (TypeImpl)intfc;
         	typeImpl.closePstmt();
+        	
+        	BaseSyncManager.getInstance().rwUnLock();
         }
 
         return result;
@@ -81,12 +91,15 @@ public class TypeService implements IType {
         ErrorCode result = null;
 
         try {
+        	BaseSyncManager.getInstance().rwLock();
             result = intfc.update(type);
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
         	TypeImpl typeImpl = (TypeImpl)intfc;
         	typeImpl.closePstmt();
+        	
+        	BaseSyncManager.getInstance().rwUnLock();
         }
 
         return result;
@@ -97,12 +110,15 @@ public class TypeService implements IType {
         ErrorCode result = null;
 
         try {
+        	BaseSyncManager.getInstance().rwLock();
             result = intfc.remove(type);
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
         	TypeImpl typeImpl = (TypeImpl)intfc;
         	typeImpl.closePstmt();
+        	
+        	BaseSyncManager.getInstance().rwUnLock();
         }
 
         return result;
@@ -113,6 +129,7 @@ public class TypeService implements IType {
         Vector<Type> vecType = null;
 
         try {
+        	BaseSyncManager.getInstance().rwLock();
         	vecType = intfc.query(type);
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
@@ -120,6 +137,8 @@ public class TypeService implements IType {
         	TypeImpl typeImpl = (TypeImpl)intfc;
         	typeImpl.closeRs();
         	typeImpl.closePstmt();
+        	
+        	BaseSyncManager.getInstance().rwUnLock();
         }
 
         return vecType;

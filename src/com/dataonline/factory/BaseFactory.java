@@ -1,11 +1,11 @@
-package com.fota.factory.base;
+package com.dataonline.factory;
 
 import org.apache.log4j.Logger;
 
-import com.fota.config.Database;
-import com.fota.intfc.base.*;
-import com.fota.service.base.*;
-import com.fota.util.common.LineNo;
+import com.dataonline.config.*;
+import com.dataonline.intfc.*;
+import com.dataonline.service.*;
+import com.dataonline.util.LineNo;
 
 public class BaseFactory {
     private static final BaseFactory baseFactory = new BaseFactory();
@@ -58,63 +58,27 @@ public class BaseFactory {
         return user;
     }
 
-    public IProject getProject() {
-        IProject project = null;
+    public IType getType() {
+        IType type = null;
 
         try {
-            project = new ProjectService(databaseName, userName, password);
+        	type = new TypeService(databaseName, userName, password);
         } catch (Exception e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         }
 
-        return project;
+        return type;
     }
 
-    public IVersion getVersion() {
-        IVersion version = null;
+    public IValue getValue(int userID) {
+        IValue value = null;
 
         try {
-            version = new VersionService(databaseName, userName, password);
+        	value = new ValueService(userID, databaseName, userName, password);
         } catch (Exception e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         }
 
-        return version;
-    }
-
-    public IIMEI getIMEI() {
-        IIMEI imei = null;
-
-        try {
-            imei = new IMEIService(databaseName, userName, password);
-        } catch (Exception e) {
-            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
-        }
-
-        return imei;
-    }
-
-    public ITerminal getTerminal() {
-        ITerminal terminal = null;
-
-        try {
-            terminal = new TerminalService(databaseName, userName, password);
-        } catch (Exception e) {
-            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
-        }
-
-        return terminal;
-    }
-    
-    public IRecord getRecord() {
-        IRecord record = null;
-        
-        try {
-            record = new RecordService(databaseName, userName, password);
-        } catch (Exception e) {
-            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
-        }
-        
-        return record;
+        return value;
     }
 }

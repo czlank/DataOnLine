@@ -1,9 +1,9 @@
-package com.fota.factory.business;
+package com.dataonline.factory;
 
-import com.fota.intfc.business.IDatabaseDeploy;
-import com.fota.service.business.DatabaseDeployService;
+import com.dataonline.intfc.IDatabaseDeploy;
+import com.dataonline.service.DatabaseDeployService;
 import org.apache.log4j.Logger;
-import com.fota.util.common.LineNo;
+import com.dataonline.util.LineNo;
 
 public class DatabaseDeployFactory {
 	private static Logger log = Logger.getLogger(DatabaseDeployFactory.class);

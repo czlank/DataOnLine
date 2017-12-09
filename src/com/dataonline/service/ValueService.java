@@ -7,21 +7,21 @@ import org.apache.log4j.Logger;
 
 import com.dataonline.db.Connector;
 import com.dataonline.util.ErrorCode;
-import com.dataonline.intfc.IUser;
-import com.dataonline.impl.UserImpl;
-import com.dataonline.pojo.User;
+import com.dataonline.intfc.IValue;
+import com.dataonline.impl.ValueImpl;
+import com.dataonline.pojo.Value;
 import com.dataonline.manager.BaseSyncManager;
 import com.dataonline.util.LineNo;
 
-public class UserService implements IUser {
+public class ValueService implements IValue {
     private Connector dbc = null;
-    private IUser intfc = null;
+    private IValue intfc = null;
     
-    private Logger log = Logger.getLogger(UserService.class);
+    private Logger log = Logger.getLogger(ValueService.class);
 
-    public UserService(String databaseName, String user, String password) throws Exception {
+    public ValueService(int userID, String databaseName, String user, String password) throws Exception {
         dbc = new Connector(databaseName, user, password);
-        intfc = new UserImpl(dbc.getConnection(), databaseName);
+        intfc = new ValueImpl(userID, dbc.getConnection(), databaseName);
     }
 
     @Override
@@ -33,8 +33,8 @@ public class UserService implements IUser {
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
-            UserImpl userImpl = (UserImpl)intfc;
-            userImpl.closePstmt();
+            ValueImpl valueImpl = (ValueImpl)intfc;
+            valueImpl.closePstmt();
             
             BaseSyncManager.getInstance().rwUnLock();
         }
@@ -51,97 +51,97 @@ public class UserService implements IUser {
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
-            UserImpl userImpl = (UserImpl)intfc;
-            userImpl.closePstmt();
-            
-            BaseSyncManager.getInstance().rwUnLock();
+        	ValueImpl valueImpl = (ValueImpl)intfc;
+        	valueImpl.closePstmt();
+        	
+        	BaseSyncManager.getInstance().rwUnLock();
         }
 
         return result;
     }
 
     @Override
-    public ErrorCode add(User user) throws SQLException {
+    public ErrorCode add(Value value) throws SQLException {
         ErrorCode result = null;
 
         try {
         	BaseSyncManager.getInstance().rwLock();
-            result = intfc.add(user);
+            result = intfc.add(value);
         } catch (SQLException e) {
             if (e.getMessage().contains("Duplicate entry")) {
                 result = ErrorCode.E_DUPLICATE_ENTRY;
 
-                UserImpl userImpl = (UserImpl)intfc;
-                userImpl.setLastError(result);
+                ValueImpl valueImpl = (ValueImpl)intfc;
+                valueImpl.setLastError(result);
             }
 
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
-            UserImpl userImpl = (UserImpl)intfc;
-            userImpl.closePstmt();
-            
-            BaseSyncManager.getInstance().rwUnLock();
+        	ValueImpl valueImpl = (ValueImpl)intfc;
+        	valueImpl.closePstmt();
+        	
+        	BaseSyncManager.getInstance().rwUnLock();
         }
 
         return result;
     }
 
     @Override
-    public ErrorCode update(User user) throws SQLException {
+    public ErrorCode update(Value value) throws SQLException {
         ErrorCode result = null;
 
         try {
         	BaseSyncManager.getInstance().rwLock();
-            result = intfc.update(user);
+            result = intfc.update(value);
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
-            UserImpl userImpl = (UserImpl)intfc;
-            userImpl.closePstmt();
-            
-            BaseSyncManager.getInstance().rwUnLock();
+        	ValueImpl valueImpl = (ValueImpl)intfc;
+        	valueImpl.closePstmt();
+        	
+        	BaseSyncManager.getInstance().rwUnLock();
         }
 
         return result;
     }
 
     @Override
-    public ErrorCode remove(User user) throws SQLException {
+    public ErrorCode remove(Value value) throws SQLException {
         ErrorCode result = null;
 
         try {
         	BaseSyncManager.getInstance().rwLock();
-            result = intfc.remove(user);
+            result = intfc.remove(value);
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
-            UserImpl userImpl = (UserImpl)intfc;
-            userImpl.closePstmt();
-            
-            BaseSyncManager.getInstance().rwUnLock();
+        	ValueImpl valueImpl = (ValueImpl)intfc;
+        	valueImpl.closePstmt();
+        	
+        	BaseSyncManager.getInstance().rwUnLock();
         }
 
         return result;
     }
 
     @Override
-    public Vector<User> query(User user) throws SQLException {
-        Vector<User> vecUser = null;
+    public Vector<Value> query(Value value) throws SQLException {
+        Vector<Value> vecValue = null;
 
         try {
         	BaseSyncManager.getInstance().rwLock();
-            vecUser = intfc.query(user);
+        	vecValue = intfc.query(value);
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
-            UserImpl userImpl = (UserImpl)intfc;
-            userImpl.closeRs();
-            userImpl.closePstmt();
-            
-            BaseSyncManager.getInstance().rwUnLock();
+        	ValueImpl valueImpl = (ValueImpl)intfc;
+        	valueImpl.closeRs();
+        	valueImpl.closePstmt();
+        	
+        	BaseSyncManager.getInstance().rwUnLock();
         }
 
-        return vecUser;
+        return vecValue;
     }
 
     @Override

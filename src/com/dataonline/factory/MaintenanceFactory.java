@@ -1,7 +1,7 @@
-package com.fota.factory.business;
+package com.dataonline.factory;
 
-import com.fota.intfc.business.IMaintenance;
-import com.fota.service.business.MaintenanceService;
+import com.dataonline.intfc.IMaintenance;
+import com.dataonline.service.MaintenanceService;
 
 public class MaintenanceFactory {
     private static final MaintenanceFactory maintenanceFactory = new MaintenanceFactory();

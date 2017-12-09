@@ -1,4 +1,4 @@
-package com.fota.action;
+package com.dataonline.action;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.fota.config.Database;
-import com.fota.factory.base.BaseFactory;
-import com.fota.intfc.base.IUser;
-import com.fota.intfc.base.UserOpt;
-import com.fota.pojo.base.User;
-import com.fota.util.common.LineNo;
+import com.dataonline.config.Database;
+import com.dataonline.factory.BaseFactory;
+import com.dataonline.intfc.IUser;
+import com.dataonline.intfc.UserOpt;
+import com.dataonline.pojo.User;
+import com.dataonline.util.LineNo;
 
 @WebServlet(
     urlPatterns = { "/login.html" },
@@ -36,7 +36,6 @@ public class Login extends HttpServlet {
         String password = request.getParameter("password");
         String action = request.getParameter("action");
         String path = new String("login.jsp");
-        //request.getSession().setMaxInactiveInterval(5);
 
         if (action.equals("login")) {
             User user = getUser(userName);
@@ -56,7 +55,6 @@ public class Login extends HttpServlet {
                 }
             } else if (user.getPassword().equals(password)) {
                 request.getSession().setAttribute("username", user.getName());
-                request.getSession().setAttribute("oem", user.getOEM());
                 request.getSession().setAttribute("userid", String.valueOf(user.getID()));
                 path = "index.jsp";
             }
@@ -67,16 +65,8 @@ public class Login extends HttpServlet {
         }
         
         if (path != "login.jsp") {
-        	/** 
-             * 客户端跳转：效率低 
-             * session范围属性，url中的参数会传递下去，request范围属性不传递 
-             */
         	response.sendRedirect(path);
         } else {
-        	/** 
-             * 服务器端跳转：常用，效率高 
-             * request范围属性，session范围属性，url中的参数会传递 ，浏览器地址栏中不会出现转向后的地址，无法重定向至有frame的jsp文件，可以重定向至有frame的html文件
-             */ 
             request.getRequestDispatcher(path).forward(request, response);
         }
     }
@@ -86,7 +76,7 @@ public class Login extends HttpServlet {
         User userRet = null;
         
         if (null == userService) {
-            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "获取IUser接口失败");
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "获取User接口失败");
         	return userRet;
         }
         

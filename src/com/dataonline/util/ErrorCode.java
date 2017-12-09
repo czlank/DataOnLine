@@ -18,7 +18,10 @@ public enum ErrorCode {
     E_USER_EDIT(2001),
     E_USER_DELETE(2002),
     E_USER_RESET_PASSWORD(2003),
-    E_USER_PARA(2004);
+    E_USER_PARA(2004),
+    
+    // 类型               E_TYPE_*
+    E_TYPE_DELETE(3000);
     
     private final int ec;
 
