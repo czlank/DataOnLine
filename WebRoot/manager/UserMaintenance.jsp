@@ -54,7 +54,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" onclick="saveUser()">保存</button>
+                        <button type="button" class="btn btn-danger" onclick="saveUser()">保存</button>
                     </div>
                 </div>
             </div>
@@ -75,9 +75,6 @@
                 if ('addUser' == $("#actionUser").val()) {
                     if ($("#userName").val() == '') {
                         MSGAlert("请填写账户名称!");
-                        return;
-                    } else if ($("#userPassword").val() == '') {
-                        MSGAlert("请填写密码!");
                         return;
                     }
                 }

@@ -97,7 +97,7 @@
             var usrName = '';
             function showUser(action, idx) {
                 if ("userAdd" == action) {
-                    document.getElementById("editUserTitle").innerHTML = "<font face=宋体 color=#23ADCF size=4>添加账户</font>";
+                    document.getElementById("editUserTitle").innerHTML = "<font face=宋体 color=#F90000 size=4>添加账户</font>";
                     
                     $("#passwordGroup").css("display", "block");
                     $("#nodesGroup").css("display", "block");
@@ -107,11 +107,11 @@
                     document.getElementById("userName").value = "";
                     
                     document.getElementById("userPassword").value = "";
-                    document.getElementById("userManufacturer").value = "";
+                    document.getElementById("nodesGroup").value = "";
                     
                     document.getElementById("actionUser").value = "addUser";
                 } else if ("userEdit" == action) {
-                	document.getElementById("editUserTitle").innerHTML = "<font face=宋体 color=#23ADCF size=4>修改账户信息</font>";
+                	document.getElementById("editUserTitle").innerHTML = "<font face=宋体 color=#F90000 size=4>修改账户信息</font>";
                 	
                 	$("#passwordGroup").css("display", "none");
                     $("#nodesGroup").css("display", "block");
@@ -129,7 +129,7 @@
                     document.getElementById("actionUser").value = "editUser";
                     document.getElementById("userId").value = jsonVector[idx]["id"];
                 } else if ("userResetPassword" == action){
-                	document.getElementById("editUserTitle").innerHTML = "<font face=宋体 color=#23ADCF size=4>重置密码</font>";
+                	document.getElementById("editUserTitle").innerHTML = "<font face=宋体 color=#F90000 size=4>重置密码</font>";
                     
                 	$("#passwordGroup").css("display", "block");
                     $("#nodesGroup").css("display", "none");
@@ -144,8 +144,8 @@
                     nameObj.value = parent.jsonDecode(jsonVector[idx]["userName"]);
                     document.getElementById("userPassword").value = "";
                     
-                    document.getElementById("actionUser").value = "userResetPassword";
-                    document.getElementById("userId").value    = jsonVector[idx]["id"];
+                    document.getElementById("actionUser").value = "resetPassword";
+                    document.getElementById("userId").value = jsonVector[idx]["id"];
                 }
             }
             
