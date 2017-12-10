@@ -30,7 +30,7 @@ public class GetLastError {
         errMsgMap.put(ErrorCode.E_USER_PARA,                "参数错误");
         
         // 类型
-        errMsgMap.put(ErrorCode.E_USER_PARA,                "删除类型信息失败");
+        errMsgMap.put(ErrorCode.E_TYPE_DELETE,              "删除类型信息失败");
     }
 
     public static GetLastError instance() {

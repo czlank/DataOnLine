@@ -44,7 +44,7 @@ public class UserCollect extends TagSupport {
             }
             
             stringer.endArray();
-       
+            
             // 给JavaScript使用
             pageContext.getRequest().setAttribute("jsonUser", stringer.toString());
             
@@ -70,6 +70,10 @@ public class UserCollect extends TagSupport {
 	}
     
     private String jsonEncode(String str) {
+    	if (null == str) {
+    		return "";
+    	}
+    	
         return str.replaceAll("(\r\n|\r|\n|\n\r)", "<br>").replaceAll("\"", "&quot;");
     }
 }
