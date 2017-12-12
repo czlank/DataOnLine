@@ -69,10 +69,12 @@ public class UserEdit extends HttpServlet {
             user.setName(userName);
             user.setPassword((String)request.getParameter("userPassword"));
             user.setType(UserTypeOpt.COMMON.get());
+            user.setNodes((String)request.getParameter("userNodes"));
             
             user.setOpt(UserOpt.O_NAME.get() 
                     | UserOpt.O_PASSWORD.get()
-                    | UserOpt.O_TYPE.get());            
+                    | UserOpt.O_TYPE.get()
+                    | UserOpt.O_NODES.get());            
           
             if (ErrorCode.E_OK == MaintenanceFactory.getInstance().getMaintenance().userAdd(user)) {
                 return true;
