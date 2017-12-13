@@ -9,6 +9,7 @@ public class Type {
     private int type    = 0;
     private double min	= 0.0;
     private double max  = 0.0;
+    private String name = new String();
     
     public Type() {
         
@@ -56,5 +57,13 @@ public class Type {
 
     public double getMax() {
         return max;
+    }
+    
+    public void setName(String name) {
+    	this.name = name;
+    }
+    
+    public String getName() {
+    	return name;
     }
 }

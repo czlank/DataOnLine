@@ -52,6 +52,7 @@ public class TypeImpl implements IType {
                 + "type INT NOT NULL UNIQUE,"
                 + "min DOUBLE NOT NULL,"
                 + "max DOUBLE NOT NULL,"
+                + "name VARCHAR(32) NOT NULL,"
                 + "PRIMARY KEY (id)"
                 + ");";
 
@@ -199,6 +200,7 @@ public class TypeImpl implements IType {
             typeRS.setType(rs.getInt(2));
             typeRS.setMin(rs.getDouble(3));
             typeRS.setMax(rs.getDouble(4));
+            typeRS.setName(rs.getString(5));
 
             vecType.add(typeRS);
         }
@@ -288,6 +290,9 @@ public class TypeImpl implements IType {
                     + "max="
                     + type.getMax() + " "
                     
+                    + "name="
+                    + "'" + type.getName() + "' "
+                    
                     + "where id="
                     + type.getID();
 
@@ -307,6 +312,10 @@ public class TypeImpl implements IType {
         if (testOpt(type.getOpt(), TypeOpt.O_MAX)) {
             sql += "max=" + type.getMax() + ", ";
         }
+        
+        if (testOpt(type.getOpt(), TypeOpt.O_NAME)) {
+        	sql += "name='" + type.getName() + "', ";
+        }
 
         sql = sql.substring(0, sql.lastIndexOf(", "));
         sql += " where id=" + type.getID();
@@ -322,7 +331,7 @@ public class TypeImpl implements IType {
         String sql = "select * from " + tableName + " where ";
         
         if (TypeOpt.O_ALL.get() == type.getOpt()) {
-            sql = "select * from " + tableName ;
+            sql = "select * from " + tableName;
             return sql;
         }
 
@@ -340,6 +349,10 @@ public class TypeImpl implements IType {
         
         if (testOpt(type.getOpt(), TypeOpt.O_MAX)) {
             sql += "max=" + type.getMax() + " and ";
+        }
+        
+        if (testOpt(type.getOpt(), TypeOpt.O_NAME)) {
+        	sql += "name='" + type.getName() + "' and ";
         }
 
         sql = sql.substring(0, sql.lastIndexOf(" and "));
