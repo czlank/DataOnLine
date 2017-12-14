@@ -21,7 +21,11 @@ public enum ErrorCode {
     E_USER_PARA(2004),
     
     // 类型               E_TYPE_*
-    E_TYPE_DELETE(3000);
+    E_TYPE_ADD(3000),
+    E_TYPE_EDIT(3001),
+    E_TYPE_DELETE(3002),
+    E_TYPE_PARA(3004),
+    E_TYPE_DUPLICATE(3005);
     
     private final int ec;
 

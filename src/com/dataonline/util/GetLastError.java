@@ -24,13 +24,17 @@ public class GetLastError {
         
         // 账户
         errMsgMap.put(ErrorCode.E_USER_ADD,                 "用户信息添加失败");
-        errMsgMap.put(ErrorCode.E_USER_DELETE,              "删除用户信息失败");
         errMsgMap.put(ErrorCode.E_USER_EDIT,                "用户信息更新失败");
+        errMsgMap.put(ErrorCode.E_USER_DELETE,              "删除用户信息失败");
         errMsgMap.put(ErrorCode.E_USER_RESET_PASSWORD,      "重置用户密码失败");
         errMsgMap.put(ErrorCode.E_USER_PARA,                "参数错误");
         
         // 类型
+        errMsgMap.put(ErrorCode.E_TYPE_ADD,                 "类型信息添加失败");
+        errMsgMap.put(ErrorCode.E_TYPE_EDIT,                "类型信息更新失败");
         errMsgMap.put(ErrorCode.E_TYPE_DELETE,              "删除类型信息失败");
+        errMsgMap.put(ErrorCode.E_TYPE_PARA,                "参数错误");
+        errMsgMap.put(ErrorCode.E_TYPE_DUPLICATE, 			"类型值重复");
     }
 
     public static GetLastError instance() {

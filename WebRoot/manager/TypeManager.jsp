@@ -132,7 +132,7 @@
                     type: "POST",
                     url:"../manager/TypeEdit.html",
                     data:{
-                        actionType : "delType",
+                        actionType : "deleteType",
                         typeId : tpId,
                         typeName : tpName,
                     },
