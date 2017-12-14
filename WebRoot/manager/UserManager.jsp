@@ -107,7 +107,7 @@
                     document.getElementById("userName").value = "";
                     
                     document.getElementById("userPassword").value = "";
-                    document.getElementById("nodesGroup").value = "";
+                    document.getElementById("userNodes").value = "";
                     
                     document.getElementById("actionUser").value = "addUser";
                 } else if ("userEdit" == action) {
@@ -123,7 +123,7 @@
                     var jsUser = '${jsonUser}';
                     var jsonVector = eval("(" + jsUser + ")");                    
 
-                    nameObj.value = parent.jsonDecode(jsonVector[idx]["userName"]);
+                    nameObj.value = parent.jsonDecode(jsonVector[idx]["name"]);
                     document.getElementById("userNodes").value = parent.jsonDecode(jsonVector[idx]["nodes"]);
                     
                     document.getElementById("actionUser").value = "editUser";
@@ -141,7 +141,7 @@
                     var jsUser = '${jsonUser}';
                     var jsonVector = eval("(" + jsUser + ")");                    
 
-                    nameObj.value = parent.jsonDecode(jsonVector[idx]["userName"]);
+                    nameObj.value = parent.jsonDecode(jsonVector[idx]["name"]);
                     document.getElementById("userPassword").value = "";
                     
                     document.getElementById("actionUser").value = "resetPassword";

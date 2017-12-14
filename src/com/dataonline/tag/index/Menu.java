@@ -17,7 +17,7 @@ public class Menu extends TagSupport {
         
         if (bAdmin) {
             // 管理员增加了额外的管理功能
-            content += getUserMenu() + getSystemMenu();
+            content += getUserMenu() + getTypeMenu() + getSystemMenu();
         }
         
         try {
@@ -45,9 +45,17 @@ public class Menu extends TagSupport {
         return content;
     }
     
+    private String getTypeMenu() {
+        String content = "<li>"
+                + "<a href=\"Type.html\"><i class=\"fa fa-tumblr fa-3x\"></i>类型管理</a>"
+                + "</li>";
+        
+        return content;
+    }
+    
     private String getSystemMenu() {
         String content = "<li>"
-                + "<a href=\"Database.html\"><i class=\"fa fa-user fa-3x\"></i>服务器管理</a>"
+                + "<a href=\"Database.html\"><i class=\"fa fa-cog fa-3x\"></i>服务器管理</a>"
                 + "</li>";
         
         return content;

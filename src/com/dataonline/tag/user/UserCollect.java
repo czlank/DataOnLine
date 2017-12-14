@@ -35,7 +35,7 @@ public class UserCollect extends TagSupport {
             if (vecUser != null) {
                 for (int i = 0; i < vecUser.size(); i++) {
                     stringer.object().key("id").value(vecUser.get(i).getID())
-                        .key("userName").value(jsonEncode(vecUser.get(i).getName()))
+                        .key("name").value(jsonEncode(vecUser.get(i).getName()))
                         .key("password").value(jsonEncode(vecUser.get(i).getPassword()))
                         .key("type").value(vecUser.get(i).getType())
                         .key("nodes").value(jsonEncode(vecUser.get(i).getNodes()))

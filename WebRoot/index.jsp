@@ -94,6 +94,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             href = "manager/Default.jsp";
                         } else if (href != null && "User.html" == href) {
                             href = "manager/UserManager.jsp";
+                        } else if (href != null && "Type.html" == href) {
+                            href = "manager/TypeManager.jsp";
                         } else if (href != null && "Database.html" == href) {
                             href = "maintenance/DatabaseManager.jsp";
                         } else {

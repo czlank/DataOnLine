@@ -38,7 +38,7 @@ public class TypeCollect extends TagSupport {
                     
                     stringer.object().key("id").value(currType.getID())
                                      .key("name").value(jsonEncode(currType.getName()))
-                                     .key("type").value(currType.getType())
+                                     .key("value").value(currType.getType())
                                      .key("min").value(currType.getMin())
                                      .key("max").value(currType.getMax())
                                      .endObject();

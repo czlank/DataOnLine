@@ -25,7 +25,7 @@ public class TypeShow extends TagSupport {
 	                   + "<td>" + type.getMax() + "</td>"
 	                   + "<td  nowrap style='text-align: center;'>"
 	                   + "<a href=\"#\" data-toggle=\"modal\" data-target=\"#editType\" onclick=\"showType('typeEdit', " + index + ")\">" + "修改</a>"
-	                   + "&nbsp;<a href=\"#\" onclick=\"typeDelete(" + index + ")\">"
+	                   + "&nbsp;<a href=\"#\" onclick=\"deleteType(" + type.getID() + ", '" + jsonEncode(type.getName()) + "'" + ")\">"
 	                   + "删除</a>"
 	                   + "</td>";
 	    
