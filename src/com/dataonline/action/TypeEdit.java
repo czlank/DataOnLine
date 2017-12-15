@@ -1,6 +1,7 @@
 package com.dataonline.action;
 
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +29,7 @@ public class TypeEdit extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Logger log = Logger.getLogger(TypeEdit.class);
     
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = (String)request.getParameter("actionType");
         response.setContentType("text/html;charset=utf-8");
         
@@ -37,9 +38,10 @@ public class TypeEdit extends HttpServlet {
         	Type type = new Type();
         	
         	type.setName((String)request.getParameter("typeName"));
-        	type.setOpt(TypeOpt.O_TYPE.get());
+        	type.setOpt(TypeOpt.O_NAME.get());
         	
-        	if (MaintenanceFactory.getInstance().getMaintenance().typeQuery(type) != null) {
+        	Vector<Type> vecType = MaintenanceFactory.getInstance().getMaintenance().typeQuery(type);
+        	if (vecType != null && vecType.size() != 0) {
         		response.getWriter().println(getFormatResult("error", GetLastError.instance().getErrorMsg(ErrorCode.E_TYPE_DUPLICATE)));
         		return;
         	}
@@ -52,9 +54,10 @@ public class TypeEdit extends HttpServlet {
         	Type type = new Type();
         	
         	type.setName((String)request.getParameter("typeName"));
-        	type.setOpt(TypeOpt.O_TYPE.get());
+        	type.setOpt(TypeOpt.O_NAME.get());
         	
-        	if (MaintenanceFactory.getInstance().getMaintenance().typeQuery(type) != null) {
+        	Vector<Type> vecType = MaintenanceFactory.getInstance().getMaintenance().typeQuery(type);
+        	if (vecType != null && vecType.size() != 0) {
         		response.getWriter().println(getFormatResult("error", GetLastError.instance().getErrorMsg(ErrorCode.E_TYPE_DUPLICATE)));
         		return;
         	}

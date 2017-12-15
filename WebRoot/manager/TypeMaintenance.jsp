@@ -33,7 +33,7 @@
                     <div class="modal-body">
                         <form id="typeEditForm" role="form" action="TypeEdit.html" method="post">
                             <div class="form-group">
-                                <label>类型</label>
+                                <label>类型名称</label>
                                 <input class="form-control" id="typeName" name="typeName" maxlength="256" title="最多可输入256个字符"/>
                             </div>
 
@@ -90,7 +90,9 @@
                 
                 if ($("#typeMin").val() == '') {
                     document.getElementById("typeMin").value = "0.0";
-                } else if ($("#typeMax").val() == '') {
+                }
+                
+                if ($("#typeMax").val() == '') {
                     document.getElementById("typeMax").value = "0.0";
                 }
                 

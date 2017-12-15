@@ -67,7 +67,7 @@ public class TypeCollect extends TagSupport {
 	public void release() {
 		super.release();
 	}
-	   
+
     private Vector<Type> getTypes() {
         Type type = new Type();
         type.setOpt(TypeOpt.O_ALL.get());

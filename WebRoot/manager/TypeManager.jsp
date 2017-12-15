@@ -24,7 +24,7 @@
     </head>
 
     <body>
-        <user:collect/>
+        <type:collect/>
 
         <div id="page-inner">
             <div class="row">
@@ -110,9 +110,9 @@
                     var jsonVector = eval("(" + jsType + ")");                    
 
                     document.getElementById("typeName").value = parent.jsonDecode(jsonVector[idx]["name"]);
-                    document.getElementById("typeValue").value = parent.jsonDecode(jsonVector[idx]["value"]);
-                    document.getElementById("typeMin").value = parent.jsonDecode(jsonVector[idx]["min"]);
-                    document.getElementById("typeMax").value = parent.jsonDecode(jsonVector[idx]["max"]);
+                    document.getElementById("typeValue").value = jsonVector[idx]["value"];
+                    document.getElementById("typeMin").value = jsonVector[idx]["min"];
+                    document.getElementById("typeMax").value = jsonVector[idx]["max"];
                     
                     document.getElementById("actionType").value = "editType";
                 }

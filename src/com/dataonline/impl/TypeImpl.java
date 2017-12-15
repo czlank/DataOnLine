@@ -102,10 +102,11 @@ public class TypeImpl implements IType {
 
         String sql = "insert into "
                 + tableName
-                + " (type, min, max) values ("
+                + " (type, min, max, name) values ("
                 + String.valueOf(type.getType()) + ", "
                 + String.valueOf(type.getMin()) + ", "
-                + String.valueOf(type.getMax())
+                + String.valueOf(type.getMax()) + ", "
+                + "'" + type.getName() + "'"
                 + ")";
 
         pstmt = conn.prepareStatement(sql);
