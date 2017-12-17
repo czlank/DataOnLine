@@ -97,6 +97,12 @@
                 if ("typeAdd" == action) {
                     document.getElementById("editTypeTitle").innerHTML = "<font face=宋体 color=#F90000 size=4>添加类型</font>";
                     
+                    document.getElementById("typeName").removeAttribute("readOnly");
+                    document.getElementById("typeName").style.backgroundColor = "#FFF";
+                    
+                    document.getElementById("typeValue").removeAttribute("readOnly");
+                    document.getElementById("typeValue").style.backgroundColor = "#FFF";
+                    
                     document.getElementById("typeName").value = "";
                     document.getElementById("typeValue").value = "";
                     document.getElementById("typeMin").value = "";
@@ -105,6 +111,12 @@
                     document.getElementById("actionType").value = "addType";
                 } else if ("typeEdit" == action) {
                 	document.getElementById("editTypeTitle").innerHTML = "<font face=宋体 color=#F90000 size=4>修改类型信息</font>";
+                	
+                	document.getElementById("typeName").setAttribute("readOnly", true);
+                	document.getElementById("typeName").style.backgroundColor = "#d2d2d2";
+                	
+                	document.getElementById("typeValue").setAttribute("readOnly", true);
+                    document.getElementById("typeValue").style.backgroundColor = "#d2d2d2";
                 	
                     var jsType = '${jsonType}';
                     var jsonVector = eval("(" + jsType + ")");                    
@@ -121,7 +133,7 @@
             function deleteType(tpId, tpName) {
             	MSGConfirm("是否删除类型？", function (tp) {
                     if (tp == 'ok') {
-                        deleteAction(typeId, typeName);
+                        deleteAction(tpId, tpName);
                     }
                 });           
             }

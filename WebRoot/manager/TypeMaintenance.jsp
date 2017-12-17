@@ -32,22 +32,22 @@
 
                     <div class="modal-body">
                         <form id="typeEditForm" role="form" action="TypeEdit.html" method="post">
-                            <div class="form-group">
+                            <div class="form-group" id="typeNameGroup">
                                 <label>类型名称</label>
                                 <input class="form-control" id="typeName" name="typeName" maxlength="256" title="最多可输入256个字符"/>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" id="typeValueGroup">
                                 <label>类型值</label>
                                 <input class="form-control" id="typeValue" name="typeValue" maxlength="32" title="最多可输入32个字符"/>
                             </div>
                             
-                            <div class="form-group">
+                            <div class="form-group" id="typeMinGroup">
                                 <label>最小值</label>
                                 <input class="form-control" id="typeMin" name="typeMin" maxlength="32" title="最多可输入32个字符"/>
                             </div>
                             
-                            <div class="form-group">
+                            <div class="form-group" id="typeMaxGroup">
                                 <label>最大值</label>
                                 <input class="form-control" id="typeMax" name="typeMax" maxlength="32" title="最多可输入32个字符"/>
                             </div>

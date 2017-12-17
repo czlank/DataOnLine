@@ -57,12 +57,12 @@ public class TypeEdit extends HttpServlet {
         	type.setOpt(TypeOpt.O_NAME.get());
         	
         	Vector<Type> vecType = MaintenanceFactory.getInstance().getMaintenance().typeQuery(type);
-        	if (vecType != null && vecType.size() != 0) {
+        	if (null == vecType || 0 == vecType.size()) {
         		response.getWriter().println(getFormatResult("error", GetLastError.instance().getErrorMsg(ErrorCode.E_TYPE_DUPLICATE)));
         		return;
         	}
         	
-            if (false == editType(request)) {
+            if (false == editType(vecType.get(0).getID(), request)) {
                 response.getWriter().println(getFormatResult("error", GetLastError.instance().getErrorMsg(ErrorCode.E_TYPE_EDIT)));                
                 return;
             }
@@ -106,19 +106,17 @@ public class TypeEdit extends HttpServlet {
         return false;
     }
     
-    private boolean editType(HttpServletRequest request) {
+    private boolean editType(int typeId, HttpServletRequest request) {
     	Type type = new Type();
         
         try {
-        	String typeName = (String)request.getParameter("typeName");
-        	int typeValue = Integer.parseInt(request.getParameter("typeValue"));
         	double typeMin = Double.parseDouble(request.getParameter("typeMin"));
         	double typeMax = Double.parseDouble(request.getParameter("typeMax"));
         	
-        	type.setName(typeName);
-            type.setType(typeValue);
+        	type.setID(typeId);
             type.setMin(typeMin);
             type.setMax(typeMax);
+            type.setOpt(TypeOpt.O_MIN.get() | TypeOpt.O_MAX.get());
           
             if (ErrorCode.E_OK == MaintenanceFactory.getInstance().getMaintenance().typeModify(type)) {
                 return true;
@@ -134,12 +132,12 @@ public class TypeEdit extends HttpServlet {
 
     private boolean deleteType(HttpServletRequest request) {
         try {
+        	int typeId = Integer.parseInt(request.getParameter("typeId"));
         	String typeName = (String)request.getParameter("typeName");
-        	int typeValue = Integer.parseInt(request.getParameter("typeValue"));
             
             Type type = new Type();
             
-            type.setType(typeValue);
+            type.setID(typeId);
             type.setOpt(TypeOpt.O_TYPE.get());
             
             if (ErrorCode.E_OK != MaintenanceFactory.getInstance().getMaintenance().typeRemove(type)) {
