@@ -72,8 +72,8 @@ public class UserEdit extends HttpServlet {
             
             user.setOpt(UserOpt.O_NAME.get() 
                     | UserOpt.O_PASSWORD.get()
-                    | UserOpt.O_TYPE.get());            
-          
+                    | UserOpt.O_TYPE.get());
+
             if (ErrorCode.E_OK == MaintenanceFactory.getInstance().getMaintenance().userAdd(user)) {
                 return true;
             }

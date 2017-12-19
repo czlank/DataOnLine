@@ -23,16 +23,19 @@ public enum ErrorCode {
     // 节点               E_NODE_*
     E_NODE_ADD(3000),
     E_NODE_EDIT(3001),
-    E_NODE_DELETE(3002),
-    E_NODE_PARA(3003),
-    E_NODE_DUPLICATE(3004),
+    E_NODE_QUERY(3002),
+    E_NODE_DELETE(3003),
+    E_NODE_PARA(3004),
+    E_NODE_DUPLICATE_VALUE(3005),
+    E_NODE_DUPLICATE_NAME(3006),
     
     // 类型               E_TYPE_*
     E_TYPE_ADD(4000),
     E_TYPE_EDIT(4001),
-    E_TYPE_DELETE(4002),
-    E_TYPE_PARA(4003),
-    E_TYPE_DUPLICATE(4004);
+    E_TYPE_QUERY(4002),
+    E_TYPE_DELETE(4003),
+    E_TYPE_PARA(4004),
+    E_TYPE_DUPLICATE(4005);
     
     private final int ec;
 

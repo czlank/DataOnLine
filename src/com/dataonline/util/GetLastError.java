@@ -32,13 +32,16 @@ public class GetLastError {
         // 节点
         errMsgMap.put(ErrorCode.E_NODE_ADD,                 "节点信息添加失败");
         errMsgMap.put(ErrorCode.E_NODE_EDIT,                "节点信息更新失败");
+        errMsgMap.put(ErrorCode.E_NODE_QUERY,				"未找到该节点");
         errMsgMap.put(ErrorCode.E_NODE_DELETE,              "删除节点信息失败");
         errMsgMap.put(ErrorCode.E_NODE_PARA,                "参数错误");
-        errMsgMap.put(ErrorCode.E_NODE_DUPLICATE, 			"节点值重复");
+        errMsgMap.put(ErrorCode.E_NODE_DUPLICATE_VALUE, 	"节点值重复");
+        errMsgMap.put(ErrorCode.E_NODE_DUPLICATE_NAME, 		"节点名称重复");
         
         // 类型
         errMsgMap.put(ErrorCode.E_TYPE_ADD,                 "类型信息添加失败");
         errMsgMap.put(ErrorCode.E_TYPE_EDIT,                "类型信息更新失败");
+        errMsgMap.put(ErrorCode.E_TYPE_QUERY,				"未找到该类型");
         errMsgMap.put(ErrorCode.E_TYPE_DELETE,              "删除类型信息失败");
         errMsgMap.put(ErrorCode.E_TYPE_PARA,                "参数错误");
         errMsgMap.put(ErrorCode.E_TYPE_DUPLICATE, 			"类型值重复");

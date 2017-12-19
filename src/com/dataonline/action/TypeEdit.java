@@ -58,7 +58,7 @@ public class TypeEdit extends HttpServlet {
         	
         	Vector<Type> vecType = MaintenanceFactory.getInstance().getMaintenance().typeQuery(type);
         	if (null == vecType || 0 == vecType.size()) {
-        		response.getWriter().println(getFormatResult("error", GetLastError.instance().getErrorMsg(ErrorCode.E_TYPE_DUPLICATE)));
+        		response.getWriter().println(getFormatResult("error", GetLastError.instance().getErrorMsg(ErrorCode.E_TYPE_QUERY)));
         		return;
         	}
         	
