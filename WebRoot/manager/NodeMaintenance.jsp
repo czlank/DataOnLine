@@ -22,38 +22,28 @@
     </head>
 
     <body>
-        <div class="modal fade" id="editType" tabindex="-1" role="dialog" aria-labelledby="typeLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal fade" id="editNode" tabindex="-1" role="dialog" aria-labelledby="nodeLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="editTypeTitle"></h4>
+                        <h4 class="modal-title" id="editNodeTitle"></h4>
                     </div>
 
                     <div class="modal-body">
-                        <form id="typeEditForm" role="form" action="TypeEdit.html" method="post">
+                        <form id="nodeEditForm" role="form" action="NodeEdit.html" method="post">
                             <div class="form-group" id="typeNameGroup">
-                                <label>类型名称</label>
-                                <input class="form-control" id="typeName" name="typeName" maxlength="256" title="最多可输入256个字符"/>
+                                <label>节点名称</label>
+                                <input class="form-control" id="nodeName" name="nodeName" maxlength="256" title="最多可输入256个字符"/>
                             </div>
 
-                            <div class="form-group" id="typeValueGroup">
-                                <label>类型值</label>
-                                <input class="form-control" id="typeValue" name="typeValue" maxlength="32" title="最多可输入32个字符"/>
+                            <div class="form-group" id="nodeValueGroup">
+                                <label>节点ID</label>
+                                <input class="form-control" id="nodeValue" name="nodeValue" maxlength="32" title="最多可输入32个字符"/>
                             </div>
                             
-                            <div class="form-group" id="typeMinGroup">
-                                <label>最小值</label>
-                                <input class="form-control" id="typeMin" name="typeMin" maxlength="32" title="最多可输入32个字符"/>
-                            </div>
-                            
-                            <div class="form-group" id="typeMaxGroup">
-                                <label>最大值</label>
-                                <input class="form-control" id="typeMax" name="typeMax" maxlength="32" title="最多可输入32个字符"/>
-                            </div>
-                            
-                            <input type="hidden" name="typeId" id="typeId" />
-                            <input type="hidden" name="actionType" id="actionType"/>
+                            <input type="hidden" name="nodeId" id="nodeId" />
+                            <input type="hidden" name="actionNode" id="actionNode"/>
                         </form>
                     </div>
 
@@ -76,43 +66,30 @@
         <script src="../assets/js/custom.js"></script>
 
         <script>
-            function saveType() {
-                if ('addType' == $("#actionType").val() || 'editType' == $("#actionType").val()) {
-                    if ($("#typeName").val() == '') {
-                        MSGAlert("请填写类型名称!");
-                        return;
-                    }
-                    
-                    if ($("#typeValue").val() == '') {
-                    	MSGAlert("请填写类型值");
+            function saveNode() {
+                if ('addNode' == $("#actionNode").val()) {
+                    if ($("#nodeValue").val() == '') {
+                    	MSGAlert("请填写节点ID");
                     	return;
-                    }    
+                    }
                 }
                 
-                if ($("#typeMin").val() == '') {
-                    document.getElementById("typeMin").value = "0.0";
-                }
-                
-                if ($("#typeMax").val() == '') {
-                    document.getElementById("typeMax").value = "0.0";
-                }
-                
-                typeSubmit();
+                nodeSubmit();
             }
             
-            function typeSubmit() {
+            function nodeSubmit() {
                 parent.showLoading();
                 $.ajax({
                         type : "POST",
-                        url : "TypeEdit.html",
-                        data : $("#typeEditForm").serialize(),
+                        url : "NodeEdit.html",
+                        data : $("#nodeEditForm").serialize(),
                         async : false,
                         error : function(request) {
                             parent.hideLoading();
                             MSGAlert("Connection error");
                         },
                         success: function(data) {
-                            onAjaxSuccess(data, "../manager/TypeManager.jsp");
+                            onAjaxSuccess(data, "../manager/NodeManager.jsp");
                         }
                     });
             }
