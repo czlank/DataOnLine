@@ -69,12 +69,10 @@ public class UserEdit extends HttpServlet {
             user.setName(userName);
             user.setPassword((String)request.getParameter("userPassword"));
             user.setType(UserTypeOpt.COMMON.get());
-            user.setNodes((String)request.getParameter("userNodes"));
             
             user.setOpt(UserOpt.O_NAME.get() 
                     | UserOpt.O_PASSWORD.get()
-                    | UserOpt.O_TYPE.get()
-                    | UserOpt.O_NODES.get());            
+                    | UserOpt.O_TYPE.get());            
           
             if (ErrorCode.E_OK == MaintenanceFactory.getInstance().getMaintenance().userAdd(user)) {
                 return true;
@@ -93,9 +91,8 @@ public class UserEdit extends HttpServlet {
         try {
             user.setID(Integer.parseInt((String)request.getParameter("userId")));
             user.setName((String)request.getParameter("userName"));
-            user.setNodes((String)request.getParameter("userNodes"));
             
-            user.setOpt(UserOpt.O_NAME.get() | UserOpt.O_NODES.get() | UserOpt.O_ID.get());
+            user.setOpt(UserOpt.O_NAME.get() | UserOpt.O_ID.get());
           
             if (ErrorCode.E_OK == MaintenanceFactory.getInstance().getMaintenance().userModify(user)) {
                 return true;

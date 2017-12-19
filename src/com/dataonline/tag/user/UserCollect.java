@@ -41,7 +41,6 @@ public class UserCollect extends TagSupport {
                         .key("name").value(jsonEncode(vecUser.get(i).getName()))
                         .key("password").value(jsonEncode(vecUser.get(i).getPassword()))
                         .key("type").value(vecUser.get(i).getType())
-                        .key("nodes").value(jsonEncode(vecUser.get(i).getNodes()))
                         .endObject();
                 }
             }

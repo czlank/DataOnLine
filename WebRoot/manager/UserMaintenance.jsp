@@ -42,11 +42,6 @@
                                 <input class="form-control" id="userPassword" name="userPassword" maxlength="256" title="最多可输入256个字符"/>
                             </div>
                             
-                            <div class="form-group" id="nodesGroup">
-                                <label>节点</label>
-                                <textarea class="form-control" rows="3" id="userNodes" name="userNodes" maxlength="2048" title="最多可输入2048个字符"></textarea>
-                            </div>
-                            
                             <input type="hidden" name="userId" id="userId" />
                             <input type="hidden" name="actionUser" id="actionUser"/>
                         </form>

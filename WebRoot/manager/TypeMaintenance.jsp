@@ -77,8 +77,7 @@
 
         <script>
             function saveType() {
-                if ('addType' == $("#actionType").val() ||
-                		'editType' == $("#actionType").val()) {
+                if ('addType' == $("#actionType").val() || 'editType' == $("#actionType").val()) {
                     if ($("#typeName").val() == '') {
                         MSGAlert("请填写类型名称!");
                         return;

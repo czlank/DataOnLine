@@ -20,12 +20,19 @@ public enum ErrorCode {
     E_USER_RESET_PASSWORD(2003),
     E_USER_PARA(2004),
     
+    // 节点               E_NODE_*
+    E_NODE_ADD(3000),
+    E_NODE_EDIT(3001),
+    E_NODE_DELETE(3002),
+    E_NODE_PARA(3003),
+    E_NODE_DUPLICATE(3004),
+    
     // 类型               E_TYPE_*
-    E_TYPE_ADD(3000),
-    E_TYPE_EDIT(3001),
-    E_TYPE_DELETE(3002),
-    E_TYPE_PARA(3004),
-    E_TYPE_DUPLICATE(3005);
+    E_TYPE_ADD(4000),
+    E_TYPE_EDIT(4001),
+    E_TYPE_DELETE(4002),
+    E_TYPE_PARA(4003),
+    E_TYPE_DUPLICATE(4004);
     
     private final int ec;
 

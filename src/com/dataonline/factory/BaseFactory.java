@@ -58,6 +58,18 @@ public class BaseFactory {
         return user;
     }
 
+    public INode getNode(int userID) {
+        INode node = null;
+
+        try {
+        	node = new NodeService(userID, databaseName, userName, password);
+        } catch (Exception e) {
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
+        }
+
+        return node;
+    }
+    
     public IType getType() {
         IType type = null;
 

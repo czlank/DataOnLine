@@ -88,7 +88,7 @@
             });
             
             window.onload=function() {
-                $("select[name='user-table_length']") .change(function () {
+                $("select[name='user-table_length']").change(function () {
                     parent.setIframeHeight();
                 });
             };
@@ -100,21 +100,18 @@
                     document.getElementById("editUserTitle").innerHTML = "<font face=宋体 color=#F90000 size=4>添加账户</font>";
                     
                     $("#passwordGroup").css("display", "block");
-                    $("#nodesGroup").css("display", "block");
                     
                     document.getElementById("userName").removeAttribute("readOnly");
                     document.getElementById("userName").style.backgroundColor = "#FFF";
                     document.getElementById("userName").value = "";
                     
                     document.getElementById("userPassword").value = "";
-                    document.getElementById("userNodes").value = "";
                     
                     document.getElementById("actionUser").value = "addUser";
                 } else if ("userEdit" == action) {
                 	document.getElementById("editUserTitle").innerHTML = "<font face=宋体 color=#F90000 size=4>修改账户信息</font>";
                 	
                 	$("#passwordGroup").css("display", "none");
-                    $("#nodesGroup").css("display", "block");
                 	
                 	var nameObj = document.getElementById("userName");
                     nameObj.setAttribute("readOnly", true);
@@ -124,15 +121,13 @@
                     var jsonVector = eval("(" + jsUser + ")");                    
 
                     nameObj.value = parent.jsonDecode(jsonVector[idx]["name"]);
-                    document.getElementById("userNodes").value = parent.jsonDecode(jsonVector[idx]["nodes"]);
                     
                     document.getElementById("actionUser").value = "editUser";
                     document.getElementById("userId").value = jsonVector[idx]["id"];
-                } else if ("userResetPassword" == action){
+                } else if ("userResetPassword" == action) {
                 	document.getElementById("editUserTitle").innerHTML = "<font face=宋体 color=#F90000 size=4>重置密码</font>";
                     
                 	$("#passwordGroup").css("display", "block");
-                    $("#nodesGroup").css("display", "none");
                 	
                 	var nameObj = document.getElementById("userName");
                     nameObj.setAttribute("readOnly", true);
@@ -161,7 +156,7 @@
                 }
                 
                 MSGConfirm("是否删除账号？", function (tp) {
-                    if (tp == 'ok'){
+                    if (tp == 'ok') {
                         deleteAction();
                     }
                 });
@@ -172,7 +167,7 @@
                 $.ajax({
                     type: "POST",
                     url:"../manager/UserEdit.html",
-                    data:{
+                    data: {
                         actionUser : "delUser",
                         userId : usrID,
                         userName : usrName,
@@ -197,9 +192,9 @@
                     } else {
                         parent.hideLoading();
                     }                   
-                } else if("logout" == Info.result){
+                } else if ("logout" == Info.result) {
                     parent.hideLoading();
-                    MSGAlert("登陆超时，请重新登录！",function(){
+                    MSGAlert("登陆超时，请重新登录！",function() {
                         window.location.href = "../login.jsp";
                     });                                
                 } else if ('error' == Info.result) {
@@ -207,7 +202,7 @@
                     MSGAlert(Info.tipMsg); 
                 } else if ('confirm' == Info.result) {
                     parent.hideLoading();
-                    if($.isFunction(confirmHandler)){
+                    if ($.isFunction(confirmHandler)) {
                         MSGConfirm(Info.tipMsg, confirmHandler);
                     }                    
                 }

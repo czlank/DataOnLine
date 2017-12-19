@@ -58,6 +58,49 @@ public class MaintenanceService implements IMaintenance {
         
         return vecUser;
     }
+    
+    @Override
+    public ErrorCode nodeAdd(int userID, Node node) {
+        BusinessSyncManager.getInstance().rwLock();
+        ErrorCode rc = maintenance.nodeAdd(userID, node);
+        
+        BusinessSyncManager.getInstance().rwUnLock();
+        
+        return rc;
+    }
+
+    @Override
+    public ErrorCode nodeModify(int userID, Node node) {
+        BusinessSyncManager.getInstance().rwLock();
+        
+        ErrorCode rc = maintenance.nodeModify(userID, node);
+        
+        BusinessSyncManager.getInstance().rwUnLock();
+        
+        return rc;
+    }
+
+    @Override
+    public ErrorCode nodeRemove(int userID, Node node) {
+        BusinessSyncManager.getInstance().rwLock();
+        
+        ErrorCode rc = maintenance.nodeRemove(userID, node);
+        
+        BusinessSyncManager.getInstance().rwUnLock();
+        
+        return rc;
+    }
+    
+    @Override
+    public Vector<Node> nodeQuery(int userID, Node node) {
+        BusinessSyncManager.getInstance().rwLock();
+        
+        Vector<Node> vecNode = maintenance.nodeQuery(userID, node);
+        
+        BusinessSyncManager.getInstance().rwUnLock();
+        
+        return vecNode;
+    }
 
     @Override
     public ErrorCode typeAdd(Type type) {

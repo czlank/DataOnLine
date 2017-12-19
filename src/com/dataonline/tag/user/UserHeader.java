@@ -13,8 +13,7 @@ public class UserHeader extends TagSupport {
         String content = "<th style=\"min-width: 60px;\">账户名 </th>"
                 + "<th>密码</th>"
                 + "<th style=\"min-width: 60px;\">类型</th>"
-                + "<th>节点</th>"
-                + "<th style=\"width: 150px;\">操作</th>";
+                + "<th style=\"width: 100px;\">操作</th>";
 
         try {
             pageContext.getOut().println("<tr>" + content + "</tr>");
@@ -24,5 +23,4 @@ public class UserHeader extends TagSupport {
         
         return EVAL_PAGE;
     }
-
 }

@@ -29,6 +29,13 @@ public class GetLastError {
         errMsgMap.put(ErrorCode.E_USER_RESET_PASSWORD,      "重置用户密码失败");
         errMsgMap.put(ErrorCode.E_USER_PARA,                "参数错误");
         
+        // 节点
+        errMsgMap.put(ErrorCode.E_NODE_ADD,                 "节点信息添加失败");
+        errMsgMap.put(ErrorCode.E_NODE_EDIT,                "节点信息更新失败");
+        errMsgMap.put(ErrorCode.E_NODE_DELETE,              "删除节点信息失败");
+        errMsgMap.put(ErrorCode.E_NODE_PARA,                "参数错误");
+        errMsgMap.put(ErrorCode.E_NODE_DUPLICATE, 			"节点值重复");
+        
         // 类型
         errMsgMap.put(ErrorCode.E_TYPE_ADD,                 "类型信息添加失败");
         errMsgMap.put(ErrorCode.E_TYPE_EDIT,                "类型信息更新失败");

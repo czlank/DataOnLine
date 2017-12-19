@@ -88,7 +88,7 @@
             });
             
             window.onload=function() {
-                $("select[name='type-table_length']") .change(function () {
+                $("select[name='type-table_length']").change(function() {
                     parent.setIframeHeight();
                 });
             };
@@ -143,7 +143,7 @@
                 $.ajax({
                     type: "POST",
                     url:"../manager/TypeEdit.html",
-                    data:{
+                    data: {
                         actionType : "deleteType",
                         typeId : tpId,
                         typeName : tpName,
@@ -163,14 +163,14 @@
                 var Info = eval('(' + msg + ')');
                 
                 if ('ok' == Info.result) {
-                    if("" != href){
+                    if ("" != href) {
                         window.location.href = href;
                     } else {
                         parent.hideLoading();
                     }                   
-                } else if("logout" == Info.result){
+                } else if ("logout" == Info.result) {
                     parent.hideLoading();
-                    MSGAlert("登陆超时，请重新登录！",function(){
+                    MSGAlert("登陆超时，请重新登录！",function() {
                         window.location.href = "../login.jsp";
                     });                                
                 } else if ('error' == Info.result) {
@@ -178,7 +178,7 @@
                     MSGAlert(Info.tipMsg); 
                 } else if ('confirm' == Info.result) {
                     parent.hideLoading();
-                    if($.isFunction(confirmHandler)){
+                    if ($.isFunction(confirmHandler)) {
                         MSGConfirm(Info.tipMsg, confirmHandler);
                     }                    
                 }

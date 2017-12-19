@@ -19,6 +19,7 @@ public class MaintenanceImpl implements IMaintenance {
         ErrorCode result = ErrorCode.E_FAIL;
         IUser userService = factory.getUser();
         IValue valueService = null;
+        INode nodeService = null;
         
         if (null == userService) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "获取User接口失败");
@@ -41,6 +42,14 @@ public class MaintenanceImpl implements IMaintenance {
             } else {
             	log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "查询新账户失败：" + userVec == null ? "未查询到新创建的账户" : "查询到" + userVec.size() + "条账户记录");
             }
+            
+            // 创建账户对应的节点表
+            if (userVec != null && 1 == userVec.size()) {
+            	nodeService = factory.getNode(userVec.get(0).getID());
+            	nodeService.create();
+            } else {
+            	log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "查询新账户失败：" + userVec == null ? "未查询到新创建的账户" : "查询到" + userVec.size() + "条账户记录");
+            }
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } catch (NullPointerException e) {
@@ -51,6 +60,10 @@ public class MaintenanceImpl implements IMaintenance {
                 
                 if (valueService != null) {
                 	valueService.destroy();
+                }
+                
+                if (nodeService != null) {
+                	nodeService.destroy();
                 }
             } catch (SQLException e) {
                 log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
@@ -92,6 +105,7 @@ public class MaintenanceImpl implements IMaintenance {
         ErrorCode result = ErrorCode.E_FAIL;
         IUser userService = factory.getUser();
         IValue valueService = factory.getValue(user.getID());
+        INode nodeService = factory.getNode(user.getID());
         
         if (null == userService) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "获取User接口失败");
@@ -104,12 +118,16 @@ public class MaintenanceImpl implements IMaintenance {
             
             // 删除账户对应的数据表
             valueService.drop();
+            
+            // 删除账户对应的节点表
+            nodeService.drop();
         } catch (SQLException e) {
             log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
         } finally {
             try {
                 userService.destroy();
                 valueService.destroy();
+                nodeService.destroy();
             } catch (SQLException e) {
                 log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
             }
@@ -143,6 +161,110 @@ public class MaintenanceImpl implements IMaintenance {
         }
         
         return vecUser;
+    }
+    
+    @Override
+    public ErrorCode nodeAdd(int userID, Node node) {
+        ErrorCode result = ErrorCode.E_FAIL;
+        INode nodeService = factory.getNode(userID);
+        
+        if (null == nodeService) {
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "获取Node接口失败");
+            return result;
+        }
+
+        try {
+            result = nodeService.add(node);
+        } catch (SQLException e) {
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
+        } catch (NullPointerException e) {
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
+        } finally {
+            try {
+            	nodeService.destroy();
+            } catch (SQLException e) {
+                log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public ErrorCode nodeModify(int userID, Node node) {
+        ErrorCode result = ErrorCode.E_FAIL;
+        INode nodeService = factory.getNode(userID);
+        
+        if (null == nodeService) {
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "获取Node接口失败");
+            return result;
+        }
+        
+        try {
+            result = nodeService.update(node);
+        } catch (SQLException e) {
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
+        } catch (NullPointerException e) {
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
+        } finally {
+            try {
+            	nodeService.destroy();
+            } catch (SQLException e) {
+                log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
+            }
+        }
+        
+        return result;
+    }
+
+    @Override
+    public ErrorCode nodeRemove(int userID, Node node) {
+        ErrorCode result = ErrorCode.E_NODE_DELETE;
+        INode nodeService = factory.getNode(userID);
+        
+        if (null == nodeService) {
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "获取Node接口失败");
+            return result;
+        }
+        
+        try {
+            result = nodeService.remove(node);
+        } catch (SQLException e) {
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
+        } finally {
+            try {
+            	nodeService.destroy();
+            } catch (SQLException e) {
+                log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
+            }
+        }
+        
+        return result;
+    }
+
+    @Override
+    public Vector<Node> nodeQuery(int userID, Node node) {
+        Vector<Node> vecNode = null;
+        INode nodeService = factory.getNode(userID);
+        
+        if (null == nodeService) {
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + "获取Node接口失败");
+            return null;
+        }
+        
+        try {
+        	vecNode = nodeService.query(node);
+        } catch (SQLException e) {
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
+        } finally {
+            try {
+            	nodeService.destroy();
+            } catch (SQLException e) {
+                log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
+            }
+        }
+        
+        return vecNode;
     }
     
     @Override

@@ -20,16 +20,17 @@ public class UserShow extends TagSupport {
 	        return SKIP_BODY;
 	    }
 
-	    String content = "<td>" + user.getName()  + "</td>"
-	                   + "<td>" + user.getPassword()   + "</td>"
-	                   + "<td nowrap>" + getUserType(user.getType())  + "</td>"
-	                   + "<td nowrap>" + user.getNodes() + "</td>"
+	    String content = "<td>" + user.getName() + "</td>"
+	                   + "<td>" + user.getPassword() + "</td>"
+	                   + "<td nowrap>" + getUserType(user.getType()) + "</td>"
 	                   + "<td nowrap>"
                        + "<a href=\"#\" data-toggle=\"modal\" data-target=\"#editUser\" onclick=\"showUser('userEdit', " + index + ") \">"  + "修改</a>"
                        + "&nbsp"
                        + getDeleteBref(user.getType())
                        + "&nbsp"
                        + "<a href=\"#\" data-toggle=\"modal\" data-target=\"#editUser\" onclick=\"showUser('userResetPassword'," + index +  ")\">重置密码</a>"
+                       + "&nbsp"
+                       + "<a href=\"EditNode.jsp?userid=" + user.getID() + "\">编辑节点</a>"
                        + "</td>";
 	    
 	    try {

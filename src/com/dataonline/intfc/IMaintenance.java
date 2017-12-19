@@ -14,6 +14,14 @@ public interface IMaintenance {
     
     public Vector<User> userQuery(User user);
     
+    public ErrorCode nodeAdd(int userID, Node node);
+
+    public ErrorCode nodeModify(int userID, Node node);
+
+    public ErrorCode nodeRemove(int userID, Node node);
+    
+    public Vector<Node> nodeQuery(int userID, Node node);
+    
     public ErrorCode typeAdd(Type type);
 
     public ErrorCode typeModify(Type type);
