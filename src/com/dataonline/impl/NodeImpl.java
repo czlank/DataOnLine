@@ -195,8 +195,8 @@ public class NodeImpl implements INode {
         while (rs.next()) {
         	Node nodeRS = new Node();
 
-        	nodeRS.setValue(rs.getInt(1));
-        	nodeRS.setName(rs.getString(2));
+        	nodeRS.setValue(rs.getInt(2));
+        	nodeRS.setName(rs.getString(3));
 
         	vecNode.add(nodeRS);
         }

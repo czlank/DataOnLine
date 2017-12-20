@@ -34,7 +34,7 @@
                         <div align="right">
                             <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#editNode" onclick="showNode('nodeAdd', -1)">添加节点</a>
                             &nbsp;&nbsp;
-                            <a href="#" class="btn btn-primary btn-sm">返回</a>
+                            <a href="#" class="btn btn-default btn-sm">返回</a>
                         </div>
 
                         <jsp:include page="NodeMaintenance.jsp"/>
@@ -60,8 +60,8 @@
                                     </thead>
 
                                     <tbody>
-                                        <node:table index="idx" itemName="typeItem" items="${types}">
-                                            <node:show index="${idx}" type="${typeItem}"/>
+                                        <node:table index="idx" itemName="nodeItem" items="${nodes}">
+                                            <node:show index="${idx}" node="${nodeItem}"/>
                                         </node:table>
                                     </tbody>
                                 </table>
@@ -99,23 +99,23 @@
                 if ("nodeAdd" == action) {
                     document.getElementById("editNodeTitle").innerHTML = "<font face=宋体 color=#F90000 size=4>添加节点</font>";
                     
-                    document.getElementById("nodeName").removeAttribute("readOnly");
-                    document.getElementById("nodeName").style.backgroundColor = "#FFF";
+                    document.getElementById("nodeNameInput").removeAttribute("readOnly");
+                    document.getElementById("nodeNameInput").style.backgroundColor = "#FFF";
                     
-                    document.getElementById("nodeName").value = "";
+                    document.getElementById("nodeNameInput").value = "";
                     document.getElementById("nodeValue").value = "";
                     
-                    document.getElementById("actionType").value = "addNode";
+                    document.getElementById("actionNode").value = "addNode";
                 } else if ("nodeEdit" == action) {
                 	document.getElementById("editNodeTitle").innerHTML = "<font face=宋体 color=#F90000 size=4>修改节点信息</font>";
                 	
-                	document.getElementById("nodeName").setAttribute("readOnly", true);
-                	document.getElementById("nodeName").style.backgroundColor = "#d2d2d2";
+                	document.getElementById("nodeNameInput").setAttribute("readOnly", true);
+                	document.getElementById("nodeNameInput").style.backgroundColor = "#d2d2d2";
                 	
                     var jsNode = '${jsonNode}';
                     var jsonVector = eval("(" + jsNode + ")");                    
 
-                    document.getElementById("nodeName").value = parent.jsonDecode(jsonVector[idx]["name"]);
+                    document.getElementById("nodeNameInput").value = parent.jsonDecode(jsonVector[idx]["name"]);
                     document.getElementById("nodeValue").value = jsonVector[idx]["value"];
                     
                     document.getElementById("actionNode").value = "editNode";

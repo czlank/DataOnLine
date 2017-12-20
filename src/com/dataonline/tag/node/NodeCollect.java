@@ -67,7 +67,7 @@ public class NodeCollect extends TagSupport {
 	}
 
     private Vector<Node> getNodes() {
-    	int userId = Integer.parseInt(pageContext.getRequest().getParameter("userId"));
+    	int userId = Integer.parseInt(pageContext.getRequest().getParameter("userid"));
     	
         Node node = new Node();
         node.setOpt(NodeOpt.O_ALL.get());

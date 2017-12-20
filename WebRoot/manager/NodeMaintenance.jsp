@@ -32,24 +32,24 @@
 
                     <div class="modal-body">
                         <form id="nodeEditForm" role="form" action="NodeEdit.html" method="post">
-                            <div class="form-group" id="typeNameGroup">
-                                <label>节点名称</label>
-                                <input class="form-control" id="nodeName" name="nodeName" maxlength="256" title="最多可输入256个字符"/>
-                            </div>
+                            <div class="form-group" id="nodeNameGroup">
+							    <label>节点名称</label>
+							    <input class="form-control" id="nodeNameInput" name="nodeNameInput" maxlength="256" title="最多可输入256个字符"/>
+							</div>
+							
+							<div class="form-group" id="nodeValueGroup">
+							    <label>节点ID</label>
+							    <input class="form-control" id="nodeValue" name="nodeValue" maxlength="32" title="最多可输入32个字符"/>
+							</div>
 
-                            <div class="form-group" id="nodeValueGroup">
-                                <label>节点ID</label>
-                                <input class="form-control" id="nodeValue" name="nodeValue" maxlength="32" title="最多可输入32个字符"/>
-                            </div>
-                            
-                            <input type="hidden" name="nodeId" id="nodeId" />
+                            <input type="hidden" name="nodeId" id="nodeId"/>
                             <input type="hidden" name="actionNode" id="actionNode"/>
                         </form>
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-danger" onclick="saveType()">保存</button>
+                        <button type="button" class="btn btn-danger" onclick="saveNode()">保存</button>
                     </div>
                 </div>
             </div>

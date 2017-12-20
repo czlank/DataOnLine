@@ -51,7 +51,7 @@ public class NodeEdit extends HttpServlet {
         	vecNode = null;
         	node.clearOpt(NodeOpt.O_VALUE.get());
         	
-        	node.setName((String)request.getParameter("nodeName"));
+        	node.setName((String)request.getParameter("nodeNameInput"));
         	node.setOpt(NodeOpt.O_NAME.get());
         	
         	// 查询是否有重复的节点名称
@@ -68,7 +68,7 @@ public class NodeEdit extends HttpServlet {
         } else if (action != null && action.equalsIgnoreCase("editNode")) {
         	Node node = new Node();
         	
-        	node.setName((String)request.getParameter("nodeName"));
+        	node.setName((String)request.getParameter("nodeNameInput"));
         	node.setOpt(NodeOpt.O_NAME.get());
         	
         	Vector<Node> vecNode = MaintenanceFactory.getInstance().getMaintenance().nodeQuery(userId, node);
@@ -101,7 +101,7 @@ public class NodeEdit extends HttpServlet {
         try {
         	int userId = Integer.parseInt(request.getParameter("userid"));
         	int nodeValue = Integer.parseInt(request.getParameter("nodeValue"));
-        	String nodeName = (String)request.getParameter("nodeName");
+        	String nodeName = (String)request.getParameter("nodeNameInput");
         	
         	node.setValue(nodeValue);
         	node.setName(nodeName);
@@ -123,7 +123,7 @@ public class NodeEdit extends HttpServlet {
         
         try {
         	int userId = Integer.parseInt(request.getParameter("userid"));
-        	String nodeName = (String)request.getParameter("nodeName");
+        	String nodeName = (String)request.getParameter("nodeNameInput");
         	
         	node.setName(nodeName);
         	node.setOpt(NodeOpt.O_NAME.get());
@@ -144,7 +144,7 @@ public class NodeEdit extends HttpServlet {
         try {
         	int userId = Integer.parseInt(request.getParameter("userid"));
         	int nodeId = Integer.parseInt(request.getParameter("nodeId"));
-        	String nodeName = (String)request.getParameter("nodeName");
+        	String nodeName = (String)request.getParameter("nodeNameInput");
             
             Node node = new Node();
             

@@ -21,16 +21,16 @@ public class UserShow extends TagSupport {
 	    }
 
 	    String content = "<td>" + user.getName() + "</td>"
-	                   + "<td>" + user.getPassword() + "</td>"
-	                   + "<td nowrap>" + getUserType(user.getType()) + "</td>"
-	                   + "<td nowrap>"
+	                   + "<td align=\"center\">" + user.getPassword() + "</td>"
+	                   + "<td nowrap align=\"center\">" + getUserType(user.getType()) + "</td>"
+	                   + "<td nowrap align=\"center\">"
                        + "<a href=\"#\" data-toggle=\"modal\" data-target=\"#editUser\" onclick=\"showUser('userEdit', " + index + ") \">"  + "修改</a>"
                        + "&nbsp"
                        + getDeleteBref(user.getType())
                        + "&nbsp"
                        + "<a href=\"#\" data-toggle=\"modal\" data-target=\"#editUser\" onclick=\"showUser('userResetPassword'," + index +  ")\">重置密码</a>"
                        + "&nbsp"
-                       + "<a href=\"EditNode.jsp?userid=" + user.getID() + "\">编辑节点</a>"
+                       + getEditNodeBref(user.getType(), user.getID())
                        + "</td>";
 	    
 	    try {
@@ -79,6 +79,18 @@ public class UserShow extends TagSupport {
             bref = "<a href=\"#\" style=\"text-decoration:none\"><font color=#666>删除</font></a>";
         } else {
             bref = "<a href=\"#\" onclick=\"deleteUser(" + String.valueOf(user.getID()) + ",'" + jsonEncode(user.getName()) + "')\">删除</a>";
+        }
+        
+        return bref;
+    }
+
+    private String getEditNodeBref(int userType, int userId) {
+    	String bref = new String();
+        
+        if (UserTypeOpt.ADMINISTRATOR.get() == userType) {
+            bref = "<a href=\"#\" style=\"text-decoration:none\"><font color=#666>编辑节点</font></a>";
+        } else {
+            bref = "<a href=\"NodeManager.jsp?userid=" + userId + "\">编辑节点</a>";
         }
         
         return bref;

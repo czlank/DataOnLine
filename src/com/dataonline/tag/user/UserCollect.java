@@ -24,7 +24,7 @@ public class UserCollect extends TagSupport {
 	
 	@Override
 	public int doStartTag() throws JspException {
-		test();
+		//test();
 		try {
             User user = new User();
           
