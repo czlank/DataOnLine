@@ -47,6 +47,7 @@ public class NodeCollect extends TagSupport {
             
             // 给JavaScript使用
             pageContext.getRequest().setAttribute("jsonNode", stringer.toString());
+            pageContext.getRequest().setAttribute("userid4editnode", pageContext.getRequest().getParameter("userid4editnode"));
         } catch (JSONException e) {
         	log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - "  + e.getMessage());
         } catch (NullPointerException e) {
@@ -67,7 +68,7 @@ public class NodeCollect extends TagSupport {
 	}
 
     private Vector<Node> getNodes() {
-    	int userId = Integer.parseInt(pageContext.getRequest().getParameter("userid"));
+    	int userId = Integer.parseInt(pageContext.getRequest().getParameter("userid4editnode"));
     	
         Node node = new Node();
         node.setOpt(NodeOpt.O_ALL.get());

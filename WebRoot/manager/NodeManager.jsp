@@ -34,7 +34,7 @@
                         <div align="right">
                             <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#editNode" onclick="showNode('nodeAdd', -1)">添加节点</a>
                             &nbsp;&nbsp;
-                            <a href="#" class="btn btn-default btn-sm">返回</a>
+                            <a href="UserManager.jsp" class="btn btn-default btn-sm">返回</a>
                         </div>
 
                         <jsp:include page="NodeMaintenance.jsp"/>
@@ -105,6 +105,7 @@
                     document.getElementById("nodeNameInput").value = "";
                     document.getElementById("nodeValue").value = "";
                     
+                    document.getElementById("userId").value = '${userid4editnode}';
                     document.getElementById("actionNode").value = "addNode";
                 } else if ("nodeEdit" == action) {
                 	document.getElementById("editNodeTitle").innerHTML = "<font face=宋体 color=#F90000 size=4>修改节点信息</font>";
@@ -118,6 +119,7 @@
                     document.getElementById("nodeNameInput").value = parent.jsonDecode(jsonVector[idx]["name"]);
                     document.getElementById("nodeValue").value = jsonVector[idx]["value"];
                     
+                    document.getElementById("userId").value = '${userid4editnode}';
                     document.getElementById("actionNode").value = "editNode";
                 }
             }
@@ -125,18 +127,21 @@
             function deleteNode(ndId, ndName) {
             	MSGConfirm("是否删除节点？", function (tp) {
                     if (tp == 'ok') {
-                        deleteAction(ndId, ndName);
+                    	var userId = '${userid4editnode}';
+                    	
+                        deleteAction(userId, ndId, ndName);
                     }
-                });           
+                });
             }
             
-            function deleteAction(ndId, ndName) {
+            function deleteAction(usrId, ndId, ndName) {
                 parent.showLoading();
                 $.ajax({
                     type: "POST",
                     url:"../manager/NodeEdit.html",
                     data: {
-                        actionType : "deleteNode",
+                        actionNode : "deleteNode",
+                        userId : usrId,
                         nodeId : ndId,
                         nodeName : ndName,
                     },
@@ -146,7 +151,7 @@
                         FotaAlert("Connection error");
                     },
                     success: function(data) {
-                        onAjaxSuccess(data, "../manager/NodeManager.jsp");
+                        onAjaxSuccess(data, "../manager/NodeManager.jsp?userid4editnode=" + '${userid4editnode}');
                     }
                 });
             }

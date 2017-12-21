@@ -42,7 +42,7 @@
 							    <input class="form-control" id="nodeValue" name="nodeValue" maxlength="32" title="最多可输入32个字符"/>
 							</div>
 
-                            <input type="hidden" name="nodeId" id="nodeId"/>
+                            <input type="hidden" name="userId" id="userId"/>
                             <input type="hidden" name="actionNode" id="actionNode"/>
                         </form>
                     </div>
@@ -89,7 +89,7 @@
                             MSGAlert("Connection error");
                         },
                         success: function(data) {
-                            onAjaxSuccess(data, "../manager/NodeManager.jsp");
+                            onAjaxSuccess(data, "../manager/NodeManager.jsp?userid4editnode=" + '${userid4editnode}');
                         }
                     });
             }

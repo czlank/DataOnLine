@@ -31,7 +31,7 @@ public class NodeEdit extends HttpServlet {
     
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = (String)request.getParameter("actionNode");
-        int userId = Integer.parseInt(request.getParameter("userid"));
+        int userId = Integer.parseInt(request.getParameter("userId"));
         response.setContentType("text/html;charset=utf-8");
         
         // 新建、修改、删除
@@ -77,7 +77,7 @@ public class NodeEdit extends HttpServlet {
         		return;
         	}
         	
-            if (false == editNode(vecNode.get(0).getID(), request)) {
+            if (false == editNode(vecNode.get(0).getValue(), request)) {
                 response.getWriter().println(getFormatResult("error", GetLastError.instance().getErrorMsg(ErrorCode.E_NODE_EDIT)));                
                 return;
             }
@@ -99,7 +99,7 @@ public class NodeEdit extends HttpServlet {
         Node node = new Node();
         
         try {
-        	int userId = Integer.parseInt(request.getParameter("userid"));
+        	int userId = Integer.parseInt(request.getParameter("userId"));
         	int nodeValue = Integer.parseInt(request.getParameter("nodeValue"));
         	String nodeName = (String)request.getParameter("nodeNameInput");
         	
@@ -122,11 +122,12 @@ public class NodeEdit extends HttpServlet {
     	Node node = new Node();
         
         try {
-        	int userId = Integer.parseInt(request.getParameter("userid"));
-        	String nodeName = (String)request.getParameter("nodeNameInput");
+        	int userId = Integer.parseInt(request.getParameter("userId"));
+        	int nodeValue = Integer.parseInt(request.getParameter("nodeValue"));
         	
-        	node.setName(nodeName);
-        	node.setOpt(NodeOpt.O_NAME.get());
+        	node.setID(nodeId);
+        	node.setValue(nodeValue);
+        	node.setOpt(NodeOpt.O_VALUE.get());
           
             if (ErrorCode.E_OK == MaintenanceFactory.getInstance().getMaintenance().nodeModify(userId, node)) {
                 return true;
@@ -142,13 +143,13 @@ public class NodeEdit extends HttpServlet {
 
     private boolean deleteNode(HttpServletRequest request) {
         try {
-        	int userId = Integer.parseInt(request.getParameter("userid"));
+        	int userId = Integer.parseInt(request.getParameter("userId"));
         	int nodeId = Integer.parseInt(request.getParameter("nodeId"));
         	String nodeName = (String)request.getParameter("nodeNameInput");
             
             Node node = new Node();
             
-            node.setID(nodeId);
+            node.setValue(nodeId);
             node.setOpt(NodeOpt.O_VALUE.get());
             
             if (ErrorCode.E_OK != MaintenanceFactory.getInstance().getMaintenance().nodeRemove(userId, node)) {

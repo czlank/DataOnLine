@@ -90,7 +90,7 @@ public class UserShow extends TagSupport {
         if (UserTypeOpt.ADMINISTRATOR.get() == userType) {
             bref = "<a href=\"#\" style=\"text-decoration:none\"><font color=#666>编辑节点</font></a>";
         } else {
-            bref = "<a href=\"NodeManager.jsp?userid=" + userId + "\">编辑节点</a>";
+            bref = "<a href=\"NodeManager.jsp?userid4editnode=" + userId + "\">编辑节点</a>";
         }
         
         return bref;

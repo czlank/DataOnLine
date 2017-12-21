@@ -157,8 +157,8 @@ public class NodeImpl implements INode {
 
         String sql = "delete from "
                 + tableName
-                + " where id="
-                + node.getID();
+                + " where value="
+                + node.getValue();
 
         pstmt = conn.prepareStatement(sql);
         result = pstmt.executeUpdate(sql);

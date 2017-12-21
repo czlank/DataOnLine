@@ -23,7 +23,7 @@ public class NodeShow extends TagSupport {
 	                   + "<td>" + node.getValue() + "</td>"
 	                   + "<td nowrap style='text-align: center;'>"
 	                   + "<a href=\"#\" data-toggle=\"modal\" data-target=\"#editNode\" onclick=\"showNode('nodeEdit', " + index + ")\">" + "修改</a>"
-	                   + "&nbsp;<a href=\"#\" onclick=\"deleteNode(" + node.getID() + ", '" + jsonEncode(node.getName()) + "'" + ")\">"
+	                   + "&nbsp;<a href=\"#\" onclick=\"deleteNode(" + node.getValue() + ", '" + jsonEncode(node.getName()) + "'" + ")\">"
 	                   + "删除</a>"
 	                   + "</td>";
 	    
