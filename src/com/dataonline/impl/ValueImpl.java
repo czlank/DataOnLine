@@ -5,12 +5,14 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 import com.dataonline.util.DataTimeCvt;
 import com.dataonline.util.ErrorCode;
 import com.dataonline.util.GetLastError;
 import com.dataonline.intfc.IValue;
+import com.dataonline.intfc.ValueOpt;
 import com.dataonline.pojo.Value;
 import com.dataonline.util.LineNo;
 
@@ -271,7 +273,22 @@ public class ValueImpl implements IValue {
     }
 
     private String getQuerySql(Value value) {
-    	return "select * from " + tableName + " where time=" + value.getDate();
+    	if (ValueOpt.O_NULL.get() == value.getOpt()) {
+            return null;
+        }
+    	
+    	if (ValueOpt.O_LASTREC.get() == value.getOpt()) {
+            return "select * from " + tableName + " where time=(select max(time) from " + tableName + ")";
+        }
+    	
+    	if (ValueOpt.O_ONEDAYRECS.get() == value.getOpt()) {
+        	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        	String dateString = formatter.format(value.getDate());
+
+            return "select * from " + tableName + " where date_format(time, '%Y-%m-%d')='" + dateString + "'";
+        }
+    	
+    	return null;
     }
 
     @Override

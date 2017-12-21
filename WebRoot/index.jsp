@@ -90,8 +90,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             $(this).next('ul').slideToggle();
                         }
                         var href = $(this).find("a").attr('href');
-                        if (href != null && "Default.html" == href) {
-                            href = "manager/Default.jsp";
+                        if (href != null && "Statistics.html" == href) {
+                            href = "manager/Statistics.jsp";
                         } else if (href != null && "User.html" == href) {
                             href = "manager/UserManager.jsp";
                         } else if (href != null && "Type.html" == href) {
@@ -99,7 +99,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         } else if (href != null && "Database.html" == href) {
                             href = "maintenance/DatabaseManager.jsp";
                         } else {
-                            href = "manager/Default.jsp";
+                            href = "manager/Statistics.jsp";
                         }
                         
                         document.getElementById('pageContent').src = href;

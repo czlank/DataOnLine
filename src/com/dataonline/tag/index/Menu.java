@@ -31,7 +31,7 @@ public class Menu extends TagSupport {
     
     private String getDefaultMenu() {
         String content = "<li>"
-                 + "<a href=\"Default.html\"><i class=\"fa fa-bar-chart fa-3x\"></i>统计信息</a>"
+                 + "<a href=\"Statistics.html\"><i class=\"fa fa-bar-chart fa-3x\"></i>统计信息</a>"
                  + "</li>";
         
         return content;
