@@ -10,7 +10,7 @@ public class MainFrame extends TagSupport {
     
     @Override
     public int doStartTag() throws JspException {
-        String content = "<iframe src=\"manager/Default.jsp\" frameborder=\"0\" scrolling=\"no\" id=\"pageContent\" onload=\"setIframeHeight(this)\" style=\"width:100%\"></iframe>";
+        String content = "<iframe src=\"manager/Statistics.jsp\" frameborder=\"0\" scrolling=\"no\" id=\"pageContent\" onload=\"setIframeHeight(this)\" style=\"width:100%\"></iframe>";
         
         try {
             pageContext.getOut().println(content);
