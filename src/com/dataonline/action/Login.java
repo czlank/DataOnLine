@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import com.dataonline.config.Database;
 import com.dataonline.factory.BaseFactory;
+import com.dataonline.impl.UserTypeOpt;
 import com.dataonline.intfc.IUser;
 import com.dataonline.intfc.UserOpt;
 import com.dataonline.pojo.User;
@@ -45,22 +46,30 @@ public class Login extends HttpServlet {
                 
                 if (xml.getFlag()) {
                     request.getSession().removeAttribute("username");
-                    request.getSession().removeAttribute("oem");
                     request.getSession().removeAttribute("userid");
                     request.setAttribute("error", "请输入正确的用户名和密码！");
                     path = "login.jsp";
                 } else if ("admin".equals(userName)) {
                     request.getSession().setAttribute("username", "admin");
+                    request.getSession().setAttribute("usertype", "administrator");
                     path = "index.jsp";
                 }
             } else if (user.getPassword().equals(password)) {
                 request.getSession().setAttribute("username", user.getName());
                 request.getSession().setAttribute("userid", String.valueOf(user.getID()));
+                
+                if (UserTypeOpt.ADMINISTRATOR.get() == user.getType()) {
+                	request.getSession().setAttribute("usertype", "administrator");
+                } else {
+                	request.getSession().setAttribute("usertype", "normal");
+                }
+                
                 path = "index.jsp";
             }
         } else if (action.equals("logout")) {
             request.getSession().removeAttribute("username");
             request.getSession().removeAttribute("userid");
+            request.getSession().removeAttribute("usertype");
             path = "login.jsp";
         }
         

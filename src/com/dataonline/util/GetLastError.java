@@ -15,7 +15,6 @@ public class GetLastError {
         errMsgMap.put(ErrorCode.E_TABLE_ALREADY_EXIST,      "表已经存在");
         errMsgMap.put(ErrorCode.E_TABLE_NOT_EXIST,          "表不存在");
         errMsgMap.put(ErrorCode.E_PARSE_USERID,             "解析iUserID出错，userID = ");
-        errMsgMap.put(ErrorCode.E_PARSE_PROJECTID,          "解析iUserID出错，projectID = ");
         errMsgMap.put(ErrorCode.E_DUPLICATE_ENTRY,          "重复的数据");
         errMsgMap.put(ErrorCode.E_LOGOUT,                   "登陆超时，请重新登录");
         
@@ -23,10 +22,11 @@ public class GetLastError {
         errMsgMap.put(ErrorCode.E_DEPLOY_DATABASE_FAIL,     "部署数据库失败");
         
         // 账户
-        errMsgMap.put(ErrorCode.E_USER_ADD,                 "用户信息添加失败");
-        errMsgMap.put(ErrorCode.E_USER_EDIT,                "用户信息更新失败");
-        errMsgMap.put(ErrorCode.E_USER_DELETE,              "删除用户信息失败");
-        errMsgMap.put(ErrorCode.E_USER_RESET_PASSWORD,      "重置用户密码失败");
+        errMsgMap.put(ErrorCode.E_USER_ADD,                 "帐户信息添加失败");
+        errMsgMap.put(ErrorCode.E_USER_EDIT,                "帐户信息更新失败");
+        errMsgMap.put(ErrorCode.E_USER_QUERY,				"未找到该帐户");
+        errMsgMap.put(ErrorCode.E_USER_DELETE,              "删除帐户信息失败");
+        errMsgMap.put(ErrorCode.E_USER_RESET_PASSWORD,      "重置帐户密码失败");
         errMsgMap.put(ErrorCode.E_USER_PARA,                "参数错误");
         
         // 节点

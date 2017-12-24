@@ -14,7 +14,7 @@
         <!-- BOOTSTRAP STYLES-->
         <link href="../assets/css/bootstrap.css" rel="stylesheet"/>
         <!-- FONTAWESOME STYLES-->
-        <link href="../assets/css/font-awesome.css" rel="stylesheet"/>
+        <link href="../assets/css/font-awesome. rel="stylesheet"/>
 
         <!-- CUSTOM STYLES-->        
         <link href="../assets/css/custom.css" rel="stylesheet"/>
@@ -25,8 +25,6 @@
     </head>
 
     <body>
-        <statistics:collect/>
-        
         <div id="page-inner">
             <div class="row">
                 <div class="col-md-12">
@@ -36,21 +34,37 @@
 
             <hr/>
 
-            <div class="row" style="display: inline-block">
-            <div class="col-md-12" style="margin-top:20px;">
-                <div class="stainput-group input-group">
-                    <div class="input-group" style="display:inline-block; vertical-align: middle;">
-                        <div class="input-icon-group">
-                            <input id="querydate" type="text" class="form-control"/>
-                            <span class="glyphicon glyphicon-calendar form-control-feedback timepicker-span"></span>        
-                        </div>
-                    </div>
-                </div>
-                <div class="stainput-group input-group">
-                    <input type="button" value="查询" class="btn btn-primary btn-sm" onclick="queryValues()"/>
-                </div>
+            <div class="row">
+	            <div class="col-md-12" align="right" style="margin-top:0px;">
+	               <%
+	               String userType = (String)session.getAttribute("usertype");
+	               if ("administrator" == userType) {
+	               %>
+	               <div class="stainput-group input-group">
+	                   <label>选择账号：&nbsp;</label>
+	                   <div class="input-group" style="display:inline-block; vertical-align: middle;">
+	                       <input type="text" name="selectUserName" id="selectUserName" class="form-control" placeholder="账号" maxlength="32"/>
+	                   </div>
+	                   &nbsp;&nbsp;
+                   </div>
+	               <%
+	               }
+	               %>
+	                <div class="stainput-group input-group">
+	                    <div class="input-group" style="display:inline-block; vertical-align: middle;">
+	                        <div class="input-icon-group">
+	                            <input id="querydate" type="text" class="form-control"/>
+	                            <span class="glyphicon glyphicon-calendar form-control-feedback timepicker-span"></span>        
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="stainput-group input-group">
+	                    <input type="button" value="查询" class="btn btn-primary btn-sm" onclick="queryValues()"/>
+	                </div>
+	            </div>
             </div>
-            </div>
+            
+            <statistics:collect/>
         </div>
 
         <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
@@ -71,30 +85,18 @@
         
         <script type="text/javascript">
             var queryDate;
-            parent.showLoading();
-
             window.onload=function() {
-                dateTimePicker.init();  
-                periodRadio.init(); 
-                parent.staSearchText = {};
-                myChart.setOption(option);// 使用刚指定的配置项和数据显示图表。                
-                window.onresize = myChart.resize;//图标内容大小自适应
-                checkAndRedraw();
+            	parent.showLoading();
+                dateTimePicker.init();
+                parent.hideLoading();
             };
             
             // datetimepicker
             var dateTimePicker = {
                 init : function () {
                     var myDate = new Date;
-                    var today, preToday;
-                    if (typeof(parent.staSearchText.startTime) != "undefined" || typeof(parent.staSearchText.endTime) != "undefined"){
-                        preToday = parent.staSearchText.startTime;
-                        today = parent.staSearchText.endTime;
-                    } else {
-                        today = myDate.getFullYear() + '/' + (myDate.getMonth()+1) + '/' + myDate.getDate();
-                        myDate.setDate(myDate.getDate() - 6);
-                        preToday = myDate.getFullYear() + '/' + (myDate.getMonth()+1) + '/' + myDate.getDate();
-                    }
+                    var today = myDate.getFullYear() + '/' + (myDate.getMonth() + 1) + '/' + myDate.getDate();
+                    myDate.setDate(myDate.getDate());
                         
                     $("#querydate").datetimepicker({
                             lang:'ch',
@@ -111,142 +113,52 @@
                 }
             };
             
-            // table
-            var dataSet;
-            var myTable;
-            function initTable(){
-                myTable = $('#sta-table').DataTable({
-                    data: dataSet,
-                    columns: [
-                        {"title": "版本名", data : "name"},
-                        {"title": "总数", data : "num", "width": "10%"},
-                        {"title": "检测成功数", data : "checkNum", "width": "12%"},
-                        {"title": "下载成功数", data : "downSucNum", "width": "12%"},
-                        {"title": "下载失败数", data : "downFailNum", "width": "12%"},
-                        {"title": "升级成功数", data : "updateSucNum", "width": "12%"},
-                        {"title": "升级失败数", data : "updateFailNum", "width": "12%"},
-                        {"title": "详情" ,data : null, "width": "10%"}
-                    ],
-                    columnDefs:[
-                        {
-                            targets: 7,
-                            render: function (data, type, row, meta) {
-                                return '<a href="#" onclick=goToStatisticsVer(\'' + row.name + '\') >详情</a>';
-                            }
-                        },
-                        {   "orderable": false, "targets": 7 },
-                        {   className: "tablecenter-colum", "targets": [1,2,3,4,5,6,7] },
-                        {   "orderable": true, "targets": 0 }
-                    ]
-                });
+            function queryValues() {
+            	var userName;
 
-                $("select[name='sta-table_length']") .change(function () {
-                    parent.setIframeHeight();
-                });
-            }            
-            
-            function reDrawMytable(tabledata) {
-                dataSet = tabledata; 
-                if (typeof(myTable) != "undefined") {
-                    myTable.clear();    //清空数据  
-                    myTable.destroy();  //还原初始化了的datatable
-                }
-                initTable();
-            }
-            
-            function goToStatisticsVer(verName){
-                parent.showLoading();
-                //parent.saveStatisInfo($("input[type='search'").val());//保存所选的项目、时间、X轴，表格搜索框信息
+            	if (document.getElementById("selectUserName")) {
+            		userName = document.getElementById("selectUserName").value;
+            	} else {
+            		userName = '${username}';
+            	}
+            	
+            	parent.showLoading();
                 $.ajax({
-                        type: "POST",
-                        url:"../manager/Statistics.html",
-                        data:{
-                            prjID : prjID,
-                            versionName : verName,
-                            actionStatistic : "goToStatisticsVer",
-                            startTime :startTime,
-                            endTime : endTime,
-                            period : period//day  mon  year
-                        },
-                        async: false,
-                        error: function(request) {
-                            parent.hideLoading();
-                            FotaAlert("Connection error");
-                        },
-                        success: function(data) {
-                            var url = "../manager/StatisticsVer.jsp" + "?prjId=" + prjID + "&version=" + verName + "&startTime=" + startTime + "&endTime=" + endTime + "&period=" + period;
-                            parent.staSearchText.prjID = prjID;
-                            parent.staSearchText.startTime = startTime;
-                            parent.staSearchText.endTime = endTime;
-                            parent.staSearchText.period = period;
-                            onAjaxSuccess(data, url);
-                        }
-                });
-            }
-            
-            function checkAndRedraw(){
-                if(!checkTimer(1)){
-                    FotaAlert("结束时间不能小于结束时间！");
-                    return;
-                }
-                parent.showLoading();
-                var params = {
-                    actionStatistic : "getPrjStadata",
-                    prjID : $("#prj-select").val(),
-                    startTime : $("#startdate").val(),
-                    endTime : $("#enddate").val(),
-                    period : $('input:radio:checked').val()//day  mon  year
-                };
-                $.ajax({
-                    type : "post",
-                    async : false, //同步执行
-                    url : "../manager/Statistics.html",
-                    data : params,
-                    error:function(){
-                         parent.hideLoading();
-                         FotaAlert("Connection error");
+                    type: "POST",
+                    url:"../manager/ValueQuery.html",
+                    data: {
+                        UserName : userName,
                     },
-                    success : function(result) {//返回结果格式{chartdata:[1,2,3,4,5],tabledata:[["",1,2,3,4,5,6,'详情'],["",1,2,3,4,5,6,'详情']]}
-                        onAjaxSuccess(result);
+                    async: false,
+                    error: function(request) {
+                        parent.hideLoading();
+                        MSGAlert("Connection error");
+                    },
+                    success: function(data) {
+                        onAjaxSuccess(data);
                     }
                 });
             }
             
-            function onAjaxSuccess(msg, href, confirmHandler) {
+            function onAjaxSuccess(msg) {
                 var Info = eval('(' + msg + ')');
                 
                 if ('ok' == Info.result) {
-                    if("" != href){
-                        window.location.href = href;
-                    }else{
-                        parent.hideLoading();
-                    }
-                } else if("logout" == Info.result) {
                     parent.hideLoading();
-                    FotaAlert("登陆超时，请重新登录！",function() {
+                    
+                    if (document.getElementById("selectUserName")) {
+                    	// 查找到的账号放在了tipMsg中
+                    	//document.getElementById("selectUserName").value = Info.tipMsg;
+                    }
+                    
+                } else if ("logout" == Info.result) {
+                    parent.hideLoading();
+                    MSGAlert("登陆超时，请重新登录！",function() {
                         window.location.href = "../login.jsp";
-                    });                                
+                    });
                 } else if ('error' == Info.result) {
                     parent.hideLoading();
-                    FotaAlert(Info.tipMsg); 
-                } else if ('confirm' == Info.result) {
-                    parent.hideLoading();
-                    if($.isFunction(confirmHandler)) {
-                        FotaConfirm(Info.tipMsg, confirmHandler);
-                    }                    
-                } else {
-                    Info.chartdata = typeof(Info.chartdata) == "undefined" ? [] : Info.chartdata;
-                    Info.tabledata = typeof(Info.tabledata) == "undefined" ? [] : Info.tabledata;
-                    if (Info) {
-                        prjID = $("#prj-select").val();
-                        startTime = $("#startdate").val();
-                        endTime = $("#enddate").val();
-                        period = $('input:radio:checked').val();
-                        parent.hideLoading();
-                        reDrawMychart(Info.chartdata);
-                        reDrawMytable(Info.tabledata);
-                    }
-                    parent.hideLoading();
+                    MSGAlert(Info.tipMsg);
                 }
             }
         </script>
