@@ -72,8 +72,8 @@ public class TypeEdit extends HttpServlet {
                 return;
             }
         } else {
-            response.getWriter().println(getFormatResult("error", GetLastError.instance().getErrorMsg(ErrorCode.E_TYPE_PARA)));
-            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + GetLastError.instance().getErrorMsg(ErrorCode.E_TYPE_PARA)); 
+            response.getWriter().println(getFormatResult("error", GetLastError.instance().getErrorMsg(ErrorCode.E_PARA)));
+            log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + GetLastError.instance().getErrorMsg(ErrorCode.E_PARA)); 
             return;
         }
         

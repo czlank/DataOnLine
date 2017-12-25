@@ -12,6 +12,7 @@ public class GetLastError {
         // 公共
         errMsgMap.put(ErrorCode.E_OK,                       "ok");
         errMsgMap.put(ErrorCode.E_FAIL,                     "失败");
+        errMsgMap.put(ErrorCode.E_PARA,                     "参数错误");
         errMsgMap.put(ErrorCode.E_TABLE_ALREADY_EXIST,      "表已经存在");
         errMsgMap.put(ErrorCode.E_TABLE_NOT_EXIST,          "表不存在");
         errMsgMap.put(ErrorCode.E_PARSE_USERID,             "解析iUserID出错，userID = ");
@@ -27,14 +28,12 @@ public class GetLastError {
         errMsgMap.put(ErrorCode.E_USER_QUERY,				"未找到该帐户");
         errMsgMap.put(ErrorCode.E_USER_DELETE,              "删除帐户信息失败");
         errMsgMap.put(ErrorCode.E_USER_RESET_PASSWORD,      "重置帐户密码失败");
-        errMsgMap.put(ErrorCode.E_USER_PARA,                "参数错误");
         
         // 节点
         errMsgMap.put(ErrorCode.E_NODE_ADD,                 "节点信息添加失败");
         errMsgMap.put(ErrorCode.E_NODE_EDIT,                "节点信息更新失败");
         errMsgMap.put(ErrorCode.E_NODE_QUERY,				"未找到该节点");
         errMsgMap.put(ErrorCode.E_NODE_DELETE,              "删除节点信息失败");
-        errMsgMap.put(ErrorCode.E_NODE_PARA,                "参数错误");
         errMsgMap.put(ErrorCode.E_NODE_DUPLICATE_VALUE, 	"节点值重复");
         errMsgMap.put(ErrorCode.E_NODE_DUPLICATE_NAME, 		"节点名称重复");
         
@@ -43,8 +42,10 @@ public class GetLastError {
         errMsgMap.put(ErrorCode.E_TYPE_EDIT,                "类型信息更新失败");
         errMsgMap.put(ErrorCode.E_TYPE_QUERY,				"未找到该类型");
         errMsgMap.put(ErrorCode.E_TYPE_DELETE,              "删除类型信息失败");
-        errMsgMap.put(ErrorCode.E_TYPE_PARA,                "参数错误");
         errMsgMap.put(ErrorCode.E_TYPE_DUPLICATE, 			"类型值重复");
+        
+        // 数据
+        errMsgMap.put(ErrorCode.E_VALUE_QUERY, 				"未找到数据");
     }
 
     public static GetLastError instance() {

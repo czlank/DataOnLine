@@ -1,4 +1,5 @@
 ﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="statistics" uri="/statistics-tags"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
@@ -35,33 +36,35 @@
 
             <div class="row">
 	            <div class="col-md-12" align="right" style="margin-top:0px;">
-	                <%
-	                String userType = (String)session.getAttribute("usertype");
-	                if ("administrator" == userType) {
-	                %>
+	               <%
+	               String userType = (String)session.getAttribute("usertype");
+	               if ("administrator" == userType) {
+	               %>
+	               <div class="stainput-group input-group">
+	                   <label>选择账号：&nbsp;</label>
+	                   <div class="input-group" style="display:inline-block; vertical-align: middle;">
+	                       <input type="text" name="selectUserName" id="selectUserName" class="form-control" placeholder="账号" maxlength="32"/>
+	                   </div>
+	                   &nbsp;&nbsp;
+                   </div>
+	               <%
+	               }
+	               %>
 	                <div class="stainput-group input-group">
-	                    <label>选择账号：&nbsp;</label>
 	                    <div class="input-group" style="display:inline-block; vertical-align: middle;">
-	                        <input type="text" name="selectUserName" id="selectUserName" class="form-control" placeholder="账号" maxlength="32"/>
+	                        <div class="input-icon-group">
+	                            <input id="querydate" type="text" class="form-control"/>
+	                            <span class="glyphicon glyphicon-calendar form-control-feedback timepicker-span"></span>        
+	                        </div>
 	                    </div>
-                    </div>
-	                
-	                <div class="stainput-group input-group">
-	                    <input type="button" value="查询" class="btn btn-primary btn-sm" onclick="summary()"/>
 	                </div>
-	                <%
-                    }
-                    %>
+	                <div class="stainput-group input-group">
+	                    <input type="button" value="查询" class="btn btn-primary btn-sm" onclick="queryValues()"/>
+	                </div>
 	            </div>
             </div>
             
-            <div class="row" style="margin-top:20px;">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        
-                    </div>
-                </div>
-            </div>
+            <statistics:collect/>
         </div>
 
         <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
@@ -84,17 +87,33 @@
             var queryDate;
             window.onload=function() {
             	parent.showLoading();
-            	summary();
+                dateTimePicker.init();
                 parent.hideLoading();
             };
             
-            $('#selectUserName').bind('keypress', function(event) { 
-                if(13 == event.keyCode) {  
-                    summary();
+            // datetimepicker
+            var dateTimePicker = {
+                init : function () {
+                    var myDate = new Date;
+                    var today = myDate.getFullYear() + '/' + (myDate.getMonth() + 1) + '/' + myDate.getDate();
+                    myDate.setDate(myDate.getDate());
+                        
+                    $("#querydate").datetimepicker({
+                            lang:'ch',
+                            timepicker:false,
+                            format:'Y-m-d',
+                            formatDate:'Y/m/d',
+                            maxDate:0,
+                            minDate:'2017/01/01',
+                            value:today,
+                            onChangeDateTime: function(dp, $input) {
+                            	queryDate = $(this).val();
+                            }
+                    });
                 }
-            });
+            };
             
-            function summary() {
+            function queryValues() {
             	var userName;
 
             	if (document.getElementById("selectUserName")) {
@@ -108,7 +127,6 @@
                     type: "POST",
                     url:"../manager/ValueQuery.html",
                     data: {
-                    	actionValue : "summary",
                         UserName : userName,
                     },
                     async: false,
@@ -127,8 +145,12 @@
                 
                 if ('ok' == Info.result) {
                     parent.hideLoading();
-                    resetTabElement();
-                    showData(Info.tipMsg);
+                    
+                    if (document.getElementById("selectUserName")) {
+                    	// 查找到的账号放在了tipMsg中
+                    	//document.getElementById("selectUserName").value = Info.tipMsg;
+                    }
+                    
                 } else if ("logout" == Info.result) {
                     parent.hideLoading();
                     MSGAlert("登陆超时，请重新登录！",function() {
@@ -137,41 +159,7 @@
                 } else if ('error' == Info.result) {
                     parent.hideLoading();
                     MSGAlert(Info.tipMsg);
-                } else {
-                	parent.hideLoading();
                 }
-            }
-            
-            function resetTabElement() {
-            	var tabHeaderElement = document.getElementById("header-statistics");
-            	var tabElement = document.getElementById("tab-statistics");
-            	
-            	if (null == tabHeaderElement) {
-            		return;
-            	}
-            	
-            	var parentNode = tabHeaderElement.parentNode;
-            	
-            	if (parentNode) {
-            		parentNode.removeChild(tabHeaderElement);
-            		parentNode.removeChild(tabElement);
-            	}
-            }
-            
-            function showData(data) {
-            	var jsonValue = eval('(' + data + ')');
-            	var jsonTypeArray = jsonValue.type;
-            	
-            	var len = parent.JSONLength(jsonTypeArray);
-            	for (var i = 0; i < len; i++) {
-            		showTab(jsonTypeArray[i]);
-            	}
-            }
-            
-            function showTab(data) {
-            	var type = data.t;
-            	
-            	
             }
         </script>
     </body>

@@ -86,15 +86,12 @@ public class UserCollect extends TagSupport {
     	String typeValue[] = {type2string(1, nodeValueArray), type2string(2, nodeValueArray)};
     	String typeValueArray = array2string(typeValue, 2);
     	
-    	String sTotalString = "{\"id\":2,\"type\":" + typeValueArray + "}";
+    	String sTotalString = "{\"type\":" + typeValueArray + "}";
     	
     	// 解析数据
     	try {
     		JSONObject json = JSONObject.fromObject(sTotalString);
-    		
-    		// 解析id
-    		System.out.println(json.get("id"));
-    		
+
     		// 解析type
         	JSONArray jsonTypeArray = JSONArray.fromObject(json.get("type"));
         	System.out.println(jsonTypeArray.size());
