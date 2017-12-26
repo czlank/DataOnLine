@@ -187,7 +187,7 @@
                 panelBody.appendChild(tabContent);
             }
             
-            function createsubTab(data, active, index) {
+            function createsubTabPanel(data, active, index) {
             	var typeName = data.t;
             	
             	var navTabs = document.getElementById("navTabs");
@@ -206,20 +206,63 @@
             	navSubTab.appendChild(link);
             	
             	var tabContent = document.getElementById('tabContent');
-            	var tabSubPane = document.createElement('div');
+            	var tabSubPanel = document.createElement('div');
             	if (1 == active) {
-            		tabSubPane.setAttribute('class', 'tab-pane fade active in');
+            		tabSubPanel.setAttribute('class', 'tab-pane fade active in');
             	} else {
-            		tabSubPane.setAttribute('class', 'tab-pane fade');
+            		tabSubPanel.setAttribute('class', 'tab-pane fade');
             	}
-            	tabSubPane.setAttribute('id', 'Type_' + index);
-            	tabContent.appendChild(tabSubPane);
+            	tabSubPanel.setAttribute('id', 'Type_' + index);
+            	tabContent.appendChild(tabSubPanel);
+            }
+            
+            function createsubTable(valueData, index, userid) {
+            	var min = valueData.min;
+                var max = valueData.max;
+                var jsonValue = eval('(' + valueData.v + ')');
+                
+            	var subTabPanel = document.getElementById('Type_' + index);
+            	if (null == subTabPanel) {
+            		return;
+            	}
+            	
+            	var tableContainer = document.createElement('div');
+            	tableContainer.setAttribute('class', 'table-responsive');
+            	subTabPanel.appendChild(tableContainer);
+            	
+            	var valueTable = document.createElement('table');
+            	valueTable.setAttribute('class', 'table table-striped table-bordered table-hover');
+            	valueTable.setAttribute('id', 'table-type_' + index);
+            	valueTable.setAttribute('style', 'word-break:break-all; word-wrap:break-all;');
+            	valueTable.setAttribute('width', '100%');
+            	tableContainer.appendChild(valueTable);
+            	
+            	var newTable = $('#table-type_' + index).DataTable({
+                    data: "[['n':1,'a':'a1','v':10]]",
+                    columns: [
+                        {"title": "节点ID", data : "n", "width": "20%"},
+                        {"title": "节点名称", data : "a", "width": "20%"},
+                        {"title": "节点值", data : "v"},
+                        {"title": "详情", data : null, "width": "10%"}
+                    ],
+                    columnDefs:[
+                        {
+                            targets: 3, // 第四列，从0开始
+                            render: function (data, type, row, meta) {
+                                return '<a href="#" onclick=goToDetails(' + userId + ', \'' + row.id + '\') >详情</a>';
+                            }
+                        },
+                        {   "orderable": false, "targets": 3 },
+                        {   className: "tablecenter-colum", "targets": [0,1,2,3] },
+                        {   "orderable": true, "targets": 0 }
+                    ]
+                });
             }
             
             function showData(data) {
             	var jsonValue = eval('(' + data + ')');
+            	var userid = jsonValue.userId;
             	var jsonTypeArray = eval('(' + jsonValue.type + ')');
-            	
             	var len = parent.JSONLength(jsonTypeArray);
             	
             	if (len != 0) {
@@ -227,15 +270,9 @@
             	}
             	
             	for (var i = 0; i < len; i++) {
-            		createsubTab(jsonTypeArray[i], 0 == i ? 1 : 0, i);
-            		showTab(jsonTypeArray[i]);
+            		createsubTabPanel(jsonTypeArray[i], 0 == i ? 1 : 0, i);
+            		createsubTable(jsonTypeArray[i], i, userid);
             	}
-            }
-            
-            function showTab(data) {
-            	var type = data.t;
-            	
-            	
             }
         </script>
     </body>

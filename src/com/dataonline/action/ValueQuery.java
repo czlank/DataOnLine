@@ -152,7 +152,10 @@ public class ValueQuery extends HttpServlet {
 			stringerTypeArray.endArray();
 			
 			JSONStringer stringer = new JSONStringer();
-			stringer.object().key("type").value(stringerTypeArray.toString()).endObject();
+			stringer.object()
+				.key("userId").value(userId)
+				.key("type").value(stringerTypeArray.toString())
+				.endObject();
 			return stringer.toString();
 		} catch (JSONException e) {
 			log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());			
