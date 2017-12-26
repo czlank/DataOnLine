@@ -59,7 +59,7 @@ public class ValueQuery extends HttpServlet {
         
         Vector<User> vecUser = MaintenanceFactory.getInstance().getMaintenance().userQuery(user);
         if (null == vecUser || 1 != vecUser.size()) {
-        	response.getWriter().println(getFormatResult("default", ""));
+        	response.getWriter().println(getFormatResult("error", GetLastError.instance().getErrorMsg(ErrorCode.E_USER_QUERY)));
         	log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + GetLastError.instance().getErrorMsg(ErrorCode.E_USER_QUERY));
         	return;
         }
@@ -74,7 +74,7 @@ public class ValueQuery extends HttpServlet {
         }
         
         String jsonValue = RePackage(vecUser.get(0).getID(), vecValue.get(0).getValue());
-        response.getWriter().println(getFormatResult("ok", "" + jsonValue));
+        response.getWriter().println(getFormatResult("ok", jsonValue));
 	}
 	
 	private String RePackage(int userId, String value) {

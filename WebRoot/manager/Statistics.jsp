@@ -55,11 +55,8 @@
 	            </div>
             </div>
             
-            <div class="row" style="margin-top:20px;">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        
-                    </div>
+            <div class="row" style="margin-top:20px;" id="statisticsrow">
+                <div class="panel panel-default" id="statistics">
                 </div>
             </div>
         </div>
@@ -103,6 +100,10 @@
             		userName = '${username}';
             	}
             	
+            	if ("" == userName) {
+            		return;
+            	}
+            	
             	parent.showLoading();
                 $.ajax({
                     type: "POST",
@@ -127,7 +128,7 @@
                 
                 if ('ok' == Info.result) {
                     parent.hideLoading();
-                    resetTabElement();
+                    resetStatisticsContent();
                     showData(Info.tipMsg);
                 } else if ("logout" == Info.result) {
                     parent.hideLoading();
@@ -135,35 +136,98 @@
                         window.location.href = "../login.jsp";
                     });
                 } else if ('error' == Info.result) {
+                	resetStatisticsContent();
                     parent.hideLoading();
                     MSGAlert(Info.tipMsg);
                 } else {
+                	resetStatisticsContent();
                 	parent.hideLoading();
                 }
             }
             
-            function resetTabElement() {
-            	var tabHeaderElement = document.getElementById("header-statistics");
-            	var tabElement = document.getElementById("tab-statistics");
-            	
-            	if (null == tabHeaderElement) {
-            		return;
+            function resetStatisticsContent() {
+            	var statisticsElement = document.getElementById("statistics");
+
+            	if (statisticsElement != null) {
+            		var parentNode = statisticsElement.parentNode;
+                    
+                    if (parentNode) {
+                        parentNode.removeChild(statisticsElement);
+                    }
             	}
             	
-            	var parentNode = tabHeaderElement.parentNode;
+            	var panel = document.createElement('div');
+            	panel.setAttribute('class', 'panel panel-default');
+            	panel.setAttribute('id', 'statistics');
             	
-            	if (parentNode) {
-            		parentNode.removeChild(tabHeaderElement);
-            		parentNode.removeChild(tabElement);
+            	var row = document.getElementById("statisticsrow");
+            	row.appendChild(panel);
+            }
+            
+            function createTabPanel() {
+            	var statisticsElement = document.getElementById("statistics");
+            	
+            	var panelHeader = document.createElement('div');
+                panelHeader.setAttribute('class', 'panel-heading');
+                panelHeader.innerHTML = '&nbsp';
+                statisticsElement.appendChild(panelHeader);
+                
+                var panelBody = document.createElement('div');
+                panelBody.setAttribute('class', 'panel-body');
+                statisticsElement.appendChild(panelBody);
+                
+                var navTabs = document.createElement('ul');
+                navTabs.setAttribute('class', 'nav nav-tabs');
+                navTabs.setAttribute('id', 'navTabs');
+                panelBody.appendChild(navTabs);
+                
+                var tabContent = document.createElement('div');
+                tabContent.setAttribute('class', 'tab-content');
+                tabContent.setAttribute('id', 'tabContent');
+                panelBody.appendChild(tabContent);
+            }
+            
+            function createsubTab(data, active, index) {
+            	var typeName = data.t;
+            	
+            	var navTabs = document.getElementById("navTabs");
+            	var navSubTab = document.createElement('li');
+            	if (1 == active) {
+            		navSubTab.setAttribute('class', 'active');
+            	} else {
+            		navSubTab.setAttribute('class', '');
             	}
+            	navTabs.appendChild(navSubTab);
+            	
+            	var link = document.createElement('a');
+            	link.setAttribute('href', '#Type_' + index);
+            	link.setAttribute('data-toggle', 'tab');
+            	link.innerHTML = typeName;
+            	navSubTab.appendChild(link);
+            	
+            	var tabContent = document.getElementById('tabContent');
+            	var tabSubPane = document.createElement('div');
+            	if (1 == active) {
+            		tabSubPane.setAttribute('class', 'tab-pane fade active in');
+            	} else {
+            		tabSubPane.setAttribute('class', 'tab-pane fade');
+            	}
+            	tabSubPane.setAttribute('id', 'Type_' + index);
+            	tabContent.appendChild(tabSubPane);
             }
             
             function showData(data) {
             	var jsonValue = eval('(' + data + ')');
-            	var jsonTypeArray = jsonValue.type;
+            	var jsonTypeArray = eval('(' + jsonValue.type + ')');
             	
             	var len = parent.JSONLength(jsonTypeArray);
+            	
+            	if (len != 0) {
+            		createTabPanel();
+            	}
+            	
             	for (var i = 0; i < len; i++) {
+            		createsubTab(jsonTypeArray[i], 0 == i ? 1 : 0, i);
             		showTab(jsonTypeArray[i]);
             	}
             }
