@@ -28,28 +28,15 @@
         <div id="page-inner">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>数据统计</h2>
+                    <h2>详情</h2>
                 </div>
             </div>
-
             <hr/>
-
+<!-- 
+userId=${param.u}&nbsp;nodeId=${param.n}
+ -->
             <div class="row">
 	            <div class="col-md-12" align="right" style="margin-top:0px;">
-	               <%
-	               String userType = (String)session.getAttribute("usertype");
-	               if ("administrator" == userType) {
-	               %>
-	               <div class="stainput-group input-group">
-	                   <label>选择账号：&nbsp;</label>
-	                   <div class="input-group" style="display:inline-block; vertical-align: middle;">
-	                       <input type="text" name="selectUserName" id="selectUserName" class="form-control" placeholder="账号" maxlength="32"/>
-	                   </div>
-	                   &nbsp;&nbsp;
-                   </div>
-	               <%
-	               }
-	               %>
 	                <div class="stainput-group input-group">
 	                    <div class="input-group" style="display:inline-block; vertical-align: middle;">
 	                        <div class="input-icon-group">
@@ -60,6 +47,8 @@
 	                </div>
 	                <div class="stainput-group input-group">
 	                    <input type="button" value="查询" class="btn btn-primary btn-sm" onclick="queryValues()"/>
+	                    &nbsp;&nbsp;
+	                    <a href="#" class="btn btn-default btn-sm" onclick="goBack()">返回</a>
 	                </div>
 	            </div>
             </div>
@@ -86,10 +75,15 @@
         <script type="text/javascript">
             var queryDate;
             window.onload=function() {
+            	var userId = '${u}';
             	parent.showLoading();
                 dateTimePicker.init();
                 parent.hideLoading();
             };
+            
+            function goBack() {
+            	history.go(-1);
+            }
             
             // datetimepicker
             var dateTimePicker = {

@@ -247,8 +247,8 @@
                     columnDefs:[
                         {
                             targets: 3, // 第四列，从0开始
-                            render: function (data, type, row, meta) {
-                                return '<a href="#" onclick=goToDetails(' + userid + ', \'' + row.id + '\') >详情</a>';
+                            render: function (data, type, full, meta) {
+                                return '<a href="StatisticsDetails.jsp?u=' + userid + '&&n=' + full.n + '">详情</a>';
                             }
                         },
                         {   "orderable": false, "targets": 3 },
