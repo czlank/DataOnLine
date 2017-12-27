@@ -1,5 +1,4 @@
 ﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib prefix="statistics" uri="/statistics-tags"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
@@ -32,9 +31,6 @@
                 </div>
             </div>
             <hr/>
-<!-- 
-userId=${param.u}&nbsp;nodeId=${param.n}
- -->
             <div class="row">
 	            <div class="col-md-12" align="right" style="margin-top:0px;">
 	                <div class="stainput-group input-group">
@@ -46,14 +42,12 @@ userId=${param.u}&nbsp;nodeId=${param.n}
 	                    </div>
 	                </div>
 	                <div class="stainput-group input-group">
-	                    <input type="button" value="查询" class="btn btn-primary btn-sm" onclick="queryValues()"/>
+	                    <input type="button" value="查询" class="btn btn-primary btn-sm" onclick="queryDetails()"/>
 	                    &nbsp;&nbsp;
 	                    <a href="#" class="btn btn-default btn-sm" onclick="goBack()">返回</a>
 	                </div>
 	            </div>
             </div>
-            
-            <statistics:collect/>
         </div>
 
         <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
@@ -75,7 +69,6 @@ userId=${param.u}&nbsp;nodeId=${param.n}
         <script type="text/javascript">
             var queryDate;
             window.onload=function() {
-            	var userId = '${u}';
             	parent.showLoading();
                 dateTimePicker.init();
                 parent.hideLoading();
@@ -107,21 +100,16 @@ userId=${param.u}&nbsp;nodeId=${param.n}
                 }
             };
             
-            function queryValues() {
-            	var userName;
-
-            	if (document.getElementById("selectUserName")) {
-            		userName = document.getElementById("selectUserName").value;
-            	} else {
-            		userName = '${username}';
-            	}
-            	
+            function queryDetails() {
             	parent.showLoading();
                 $.ajax({
                     type: "POST",
                     url:"../manager/ValueQuery.html",
                     data: {
-                        UserName : userName,
+                    	actionValue : "detail",
+                        UserID : '${param.u}',
+                        NodeID : '${param.n}',
+                        Date : $("#querydate").val(),
                     },
                     async: false,
                     error: function(request) {

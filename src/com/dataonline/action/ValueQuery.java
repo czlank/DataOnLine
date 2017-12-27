@@ -46,6 +46,9 @@ public class ValueQuery extends HttpServlet {
         if (action != null && action.equalsIgnoreCase("summary")) {
         	querySummary(request, response);
         	return;
+        } else if (action != null && action.equalsIgnoreCase("detail")) {
+        	queryDetail(request, response);
+        	return;
         }
         
         response.getWriter().println(getFormatResult("error", GetLastError.instance().getErrorMsg(ErrorCode.E_PARA)));
@@ -75,6 +78,16 @@ public class ValueQuery extends HttpServlet {
         
         String jsonValue = RePackage(vecUser.get(0).getID(), vecValue.get(0).getValue());
         response.getWriter().println(getFormatResult("ok", jsonValue));
+	}
+	
+	private void queryDetail(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		try {
+			int userId = Integer.parseInt((String)request.getParameter("UserID"));
+			int nodeId = Integer.parseInt((String)request.getParameter("NodeID"));
+			String date = (String)request.getParameter("Date");
+		} catch (NumberFormatException e) {
+			log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
+		}
 	}
 	
 	private String RePackage(int userId, String value) {
