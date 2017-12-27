@@ -166,12 +166,7 @@
             
             function createTabPanel() {
             	var statisticsElement = document.getElementById("statistics");
-            	
-            	var panelHeader = document.createElement('div');
-                panelHeader.setAttribute('class', 'panel-heading');
-                panelHeader.innerHTML = '&nbsp';
-                statisticsElement.appendChild(panelHeader);
-                
+
                 var panelBody = document.createElement('div');
                 panelBody.setAttribute('class', 'panel-body');
                 statisticsElement.appendChild(panelBody);
@@ -226,22 +221,26 @@
             		return;
             	}
             	
+            	var tablePanel = document.createElement('div');
+            	tablePanel.setAttribute('class', 'panel-body');
+            	subTabPanel.appendChild(tablePanel);
+            	
             	var tableContainer = document.createElement('div');
             	tableContainer.setAttribute('class', 'table-responsive');
-            	subTabPanel.appendChild(tableContainer);
+            	tablePanel.appendChild(tableContainer);
             	
             	var valueTable = document.createElement('table');
             	valueTable.setAttribute('class', 'table table-striped table-bordered table-hover');
-            	valueTable.setAttribute('id', 'table-type_' + index);
+            	valueTable.setAttribute('id', 'table-type-' + index);
             	valueTable.setAttribute('style', 'word-break:break-all; word-wrap:break-all;');
             	valueTable.setAttribute('width', '100%');
             	tableContainer.appendChild(valueTable);
             	
-            	var newTable = $('#table-type_' + index).DataTable({
-                    data: "[['n':1,'a':'a1','v':10]]",
+            	var newTable = $('#table-type-' + index).DataTable({
+                    data: jsonValue,
                     columns: [
                         {"title": "节点ID", data : "n", "width": "20%"},
-                        {"title": "节点名称", data : "a", "width": "20%"},
+                        {"title": "节点名称", data : "a", "width": "40%"},
                         {"title": "节点值", data : "v"},
                         {"title": "详情", data : null, "width": "10%"}
                     ],
@@ -249,7 +248,7 @@
                         {
                             targets: 3, // 第四列，从0开始
                             render: function (data, type, row, meta) {
-                                return '<a href="#" onclick=goToDetails(' + userId + ', \'' + row.id + '\') >详情</a>';
+                                return '<a href="#" onclick=goToDetails(' + userid + ', \'' + row.id + '\') >详情</a>';
                             }
                         },
                         {   "orderable": false, "targets": 3 },
@@ -257,6 +256,12 @@
                         {   "orderable": true, "targets": 0 }
                     ]
                 });
+            	
+                $("select[name='table-type-" + index + "_length']").change(function () {
+                    parent.setIframeHeight();
+                });
+                
+                parent.setIframeHeight();
             }
             
             function showData(data) {
