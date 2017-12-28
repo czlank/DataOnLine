@@ -102,11 +102,24 @@ public class ValueQuery extends HttpServlet {
 	        	log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + GetLastError.instance().getErrorMsg(ErrorCode.E_VALUE_QUERY));
 	        	return;
 			}
+			
+			String jsonValue = RePackage(nodeId, vecValue);
+	        response.getWriter().println(getFormatResult("ok", jsonValue));
 		} catch (NumberFormatException e) {
 			log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
 		} catch (ParseException e) {
 			log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
 		}
+	}
+	
+	private String RePackage(int nodeId, Vector<Value> vecValue) {
+		try {
+			
+		} catch (JSONException e) {
+			log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());			
+		}
+		
+		return "";
 	}
 	
 	private String RePackage(int userId, String value) {
