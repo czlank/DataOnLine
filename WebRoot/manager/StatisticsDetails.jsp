@@ -32,19 +32,29 @@
             </div>
             <hr/>
             <div class="row">
-	            <div class="col-md-12" align="right" style="margin-top:0px;">
-	                <div class="stainput-group input-group">
-	                    <div class="input-group" style="display:inline-block; vertical-align: middle;">
+	            <div class="col-md-12">
+	                <div class="panel panel-default">
+	                    <div class="panel-heading" class="row">
+	                        <font face=宋体 color=red size=5>类型：${param.t} - 节点：${param.nn}</font>
+	                        <a href="#" onclick="goBack()" style="float: right;"><i class="fa fa-reply"></i>返回</a>
+		                </div>
+	                </div>
+	                
+	                <div class="stainput-group input-group" style="float: right;">
+		                <div class="input-group" style="display:inline-block; vertical-align: middle;">
 	                        <div class="input-icon-group">
 	                            <input id="querydate" type="text" class="form-control"/>
-	                            <span class="glyphicon glyphicon-calendar form-control-feedback timepicker-span"></span>        
+	                            <span class="glyphicon glyphicon-calendar form-control-feedback timepicker-span" ></span>
 	                        </div>
 	                    </div>
+	                    <div class="query-group" style="display:inline-block; vertical-align: middle;">
+	                        &nbsp;
+	                        <input type="button" value="查询" class="btn btn-primary btn-sm" onclick="queryDetails()"/>
+	                    </div>
 	                </div>
-	                <div class="stainput-group input-group">
-	                    <input type="button" value="查询" class="btn btn-primary btn-sm" onclick="queryDetails()"/>
-	                    &nbsp;&nbsp;
-	                    <a href="#" class="btn btn-default btn-sm" onclick="goBack()">返回</a>
+	                <br/><br/><br/>
+	                <div class="panel-body">
+	                1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
 	                </div>
 	            </div>
             </div>
@@ -72,6 +82,7 @@
             	parent.showLoading();
                 dateTimePicker.init();
                 parent.hideLoading();
+                queryDetails();
             };
             
             function goBack() {
@@ -127,12 +138,6 @@
                 
                 if ('ok' == Info.result) {
                     parent.hideLoading();
-                    
-                    if (document.getElementById("selectUserName")) {
-                    	// 查找到的账号放在了tipMsg中
-                    	//document.getElementById("selectUserName").value = Info.tipMsg;
-                    }
-                    
                 } else if ("logout" == Info.result) {
                     parent.hideLoading();
                     MSGAlert("登陆超时，请重新登录！",function() {

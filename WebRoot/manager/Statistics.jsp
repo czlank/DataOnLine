@@ -212,6 +212,7 @@
             }
             
             function createsubTable(valueData, index, userid) {
+            	var typeName = valueData.t;
             	var min = valueData.min;
                 var max = valueData.max;
                 var jsonValue = eval('(' + valueData.v + ')');
@@ -248,7 +249,7 @@
                         {
                             targets: 3, // 第四列，从0开始
                             render: function (data, type, full, meta) {
-                                return '<a href="StatisticsDetails.jsp?u=' + userid + '&&n=' + full.n + '">详情</a>';
+                                return '<a href="StatisticsDetails.jsp?u=' + userid + '&t=' + typeName + '&n=' + full.n + '&nn=' + full.a + '">详情</a>';
                             }
                         },
                         {   "orderable": false, "targets": 3 },

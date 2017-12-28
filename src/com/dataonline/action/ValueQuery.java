@@ -1,6 +1,9 @@
 package com.dataonline.action;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -85,7 +88,23 @@ public class ValueQuery extends HttpServlet {
 			int userId = Integer.parseInt((String)request.getParameter("UserID"));
 			int nodeId = Integer.parseInt((String)request.getParameter("NodeID"));
 			String date = (String)request.getParameter("Date");
+			
+			Value value = new Value();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date d = sdf.parse(date);
+			value.setDate(d);
+			value.setOpt(ValueOpt.O_ONEDAYRECS.get());
+			
+			Vector<Value> vecValue = MaintenanceFactory.getInstance().getMaintenance().valueQuery(userId, value);
+			if (null == vecValue) {
+				response.getWriter().println(getFormatResult("error", GetLastError.instance().getErrorMsg(ErrorCode.E_VALUE_QUERY)));
+	        	log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + GetLastError.instance().getErrorMsg(ErrorCode.E_VALUE_QUERY));
+	        	return;
+			}
 		} catch (NumberFormatException e) {
+			log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
+		} catch (ParseException e) {
 			log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
 		}
 	}
