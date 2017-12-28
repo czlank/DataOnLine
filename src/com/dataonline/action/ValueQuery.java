@@ -87,6 +87,7 @@ public class ValueQuery extends HttpServlet {
 		try {
 			int userId = Integer.parseInt((String)request.getParameter("UserID"));
 			int nodeId = Integer.parseInt((String)request.getParameter("NodeID"));
+			int typeValue = Integer.parseInt((String)request.getParameter("TypeValue"));
 			String date = (String)request.getParameter("Date");
 			
 			Value value = new Value();
@@ -103,18 +104,70 @@ public class ValueQuery extends HttpServlet {
 	        	return;
 			}
 			
-			String jsonValue = RePackage(nodeId, vecValue);
+			String jsonValue = RePackage(typeValue, nodeId, vecValue);
 	        response.getWriter().println(getFormatResult("ok", jsonValue));
+	        return;
 		} catch (NumberFormatException e) {
 			log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
 		} catch (ParseException e) {
 			log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());
 		}
+		
+		response.getWriter().println(getFormatResult("ok", ""));
 	}
 	
-	private String RePackage(int nodeId, Vector<Value> vecValue) {
+	private String RePackage(int typeID, int nodeID, Vector<Value> vecValue) {
 		try {
+			JSONStringer stringerValue = new JSONStringer();
+			stringerValue.array();
 			
+			for (int i = 0; i < vecValue.size(); i++) {
+				Value value = vecValue.get(i);
+				
+				JSONObject json = JSONObject.fromObject(value.getValue());
+				
+				// 解析type
+				JSONArray jsonTypeArray = JSONArray.fromObject(json.get("type"));
+				
+				for(int typeIdx = 0; typeIdx < jsonTypeArray.size(); typeIdx++) {
+					JSONObject jsonType = JSONObject.fromObject(jsonTypeArray.getString(typeIdx));
+					
+					// 解析类型id
+	        		int typeId = Integer.parseInt(String.valueOf(jsonType.get("t")));
+	        		
+	        		if (typeID != typeId) {
+	        			continue;
+	        		}
+	        		
+	        		// 解析此类型的数据
+	        		JSONArray jsonValueArray = JSONArray.fromObject(jsonType.get("v"));
+	        		
+	        		for (int valueIdx = 0; valueIdx < jsonValueArray.size(); valueIdx++) {
+	        			// 解析节点数据
+	        			JSONObject jsonValue = JSONObject.fromObject(jsonValueArray.getString(valueIdx));
+	        			
+	        			int nodeId = Integer.parseInt(String.valueOf(jsonValue.get("n")));
+	        			
+	        			if (nodeID != nodeId) {
+	        				continue;
+	        			}
+	        			
+	        			stringerValue.object()
+	        				.key("t").value((new SimpleDateFormat("HH:mm:ss")).format(value.getDate()))
+	        				.key("v").value(jsonValue.get("v"))
+	        				.endObject();
+	        			
+	        			break;
+	        		}
+				}
+			}
+			
+			stringerValue.endArray();
+			
+			JSONStringer stringer = new JSONStringer();
+			stringer.object().key("array").value(stringerValue.toString()).endObject();
+			
+			return stringer.toString();
 		} catch (JSONException e) {
 			log.error(LineNo.getFileName() + ":L" + LineNo.getLineNumber() + " - " + e.getMessage());			
 		}
@@ -187,7 +240,8 @@ public class ValueQuery extends HttpServlet {
         		stringerValueArray.endArray();
         		
         		stringerTypeArray.object()
-        			.key("t").value(typeName)						// 类型名称
+        			.key("t").value(typeId)							// 类型值
+        			.key("tn").value(typeName)						// 类型名称
         			.key("min").value(min)							// 最小值
         			.key("max").value(max)							// 最大值
         			.key("v").value(stringerValueArray.toString())	// 该类型中的数据

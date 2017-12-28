@@ -35,7 +35,7 @@
 	            <div class="col-md-12">
 	                <div class="panel panel-default">
 	                    <div class="panel-heading" class="row">
-	                        <font face=宋体 color=red size=5>类型：${param.t} - 节点：${param.nn}</font>
+	                        <font face=宋体 color=red size=5>类型：${param.tn} - 节点：${param.nn}</font>
 	                        <a href="#" onclick="goBack()" style="float: right;"><i class="fa fa-reply"></i>返回</a>
 		                </div>
 	                </div>
@@ -119,6 +119,7 @@
                     data: {
                     	actionValue : "detail",
                         UserID : '${param.u}',
+                        TypeValue : '${param.t}',
                         NodeID : '${param.n}',
                         Date : $("#querydate").val(),
                     },
@@ -138,6 +139,7 @@
                 
                 if ('ok' == Info.result) {
                     parent.hideLoading();
+                    showData(Info.tipMsg);
                 } else if ("logout" == Info.result) {
                     parent.hideLoading();
                     MSGAlert("登陆超时，请重新登录！",function() {
@@ -147,6 +149,12 @@
                     parent.hideLoading();
                     MSGAlert(Info.tipMsg);
                 }
+            }
+            
+            function showData(data) {
+            	var jsonValue = eval('(' + data + ')');
+            	var jsonTypeArray = eval('(' + jsonValue.array + ')');
+                var len = parent.JSONLength(jsonTypeArray);
             }
         </script>
     </body>
