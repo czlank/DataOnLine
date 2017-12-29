@@ -1,6 +1,6 @@
 ﻿
 /*modify the real file path if needed*/
-document.write(' <link type="text/css" rel="stylesheet" href= "../assets/msgbox/msg.box.css" />');
+document.write('<link type="text/css" rel="stylesheet" href="../assets/msgbox/msg.box.css"/>');
 document.write('<script src="../assets/msgbox/msg.box.js"><\/script>');
 var width = 400;
 var height= 200;

@@ -54,7 +54,7 @@
 	                </div>
 	                <br/><br/><br/>
 	                <div class="panel-body">
-	                1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+	                    <div id="chart-panel" style="width: 100%; height:300px;"></div>
 	                </div>
 	            </div>
             </div>
@@ -71,7 +71,7 @@
         <script src="../assets/js/dataTables/jquery.dataTables.min.js"></script>
         <script src="../assets/js/dataTables/dataTables.bootstrap.min.js"></script>
         <script src="../assets/js/jquery.datetimepicker.full.js"></script>
-        <script src="../assets/js/echarts.js"></script>
+        <script src="../assets/js/echarts.min.js"></script>
         <script src="../assets/js/macarons.js"></script>
         <script src="../assets/msgbox/msg.js" language="JavaScript" type="text/javascript"></script>        
         <script src="../assets/js/chosen.jquery.js"></script>
@@ -111,6 +111,59 @@
                 }
             };
             
+            // eCharts
+            var myChart = echarts.init(document.getElementById('chart-panel'), 'macarons');
+            // 指定图表的配置项和数据
+            var option = {
+            	    title: {
+            	        text: '',
+            	        subtext: ''
+            	    },
+            	    tooltip: {
+            	        trigger: 'axis'
+            	    },
+            	    legend: {
+            	        data:['']
+            	    },
+            	    toolbox: {
+            	        show: true,
+            	        feature: {
+            	            dataZoom: {
+            	                yAxisIndex: 'none'
+            	            },
+            	            dataView: {readOnly: false},
+            	            magicType: {type: ['line', 'bar']},
+            	            restore: {},
+            	            saveAsImage: {}
+            	        }
+            	    },
+            	    xAxis:  {
+            	        type: 'category',
+            	        boundaryGap: false,
+            	        data: []
+            	    },
+            	    yAxis: {
+            	        type: 'value',
+            	        axisLabel: {
+            	            formatter: '{value}'
+            	        }
+            	    },
+            	    series: [
+            	        {
+            	            name:'',
+            	            type:'line',
+            	            data:[10, 20],
+            	            
+            	            markLine: {
+            	                data: [
+            	                    {yAxis: 8},
+            	                    {yAxis: 3}
+            	                ]
+            	            }
+            	        }
+            	    ]
+            	};
+            
             function queryDetails() {
             	parent.showLoading();
                 $.ajax({
@@ -120,6 +173,8 @@
                     	actionValue : "detail",
                         UserID : '${param.u}',
                         TypeValue : '${param.t}',
+                        TypeMin : '${param.min}',
+                        TypeMax : '${param.max}',
                         NodeID : '${param.n}',
                         Date : $("#querydate").val(),
                     },
@@ -153,8 +208,13 @@
             
             function showData(data) {
             	var jsonValue = eval('(' + data + ')');
-            	var jsonTypeArray = eval('(' + jsonValue.array + ')');
-                var len = parent.JSONLength(jsonTypeArray);
+            	var min = jsonValue.min;
+            	var max = jsonValue.max;
+
+           		option.xAxis.data = jsonValue.x;
+                //option.series[0].data = jsonValue.y;
+            	
+            	myChart.setOption(option);
             }
         </script>
     </body>

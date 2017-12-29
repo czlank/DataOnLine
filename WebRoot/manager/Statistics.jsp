@@ -72,8 +72,6 @@
         <script src="../assets/js/dataTables/jquery.dataTables.min.js"></script>
         <script src="../assets/js/dataTables/dataTables.bootstrap.min.js"></script>
         <script src="../assets/js/jquery.datetimepicker.full.js"></script>
-        <script src="../assets/js/echarts.js"></script>
-        <script src="../assets/js/macarons.js"></script>
         <script src="../assets/msgbox/msg.js" language="JavaScript" type="text/javascript"></script>        
         <script src="../assets/js/chosen.jquery.js"></script>
         
@@ -250,7 +248,7 @@
                         {
                             targets: 3, // 第四列，从0开始
                             render: function (data, type, full, meta) {
-                                return '<a href="StatisticsDetails.jsp?u=' + userid + '&t=' + typeId + '&tn=' + typeName + '&n=' + full.n + '&nn=' + full.a + '">详情</a>';
+                                return '<a href="StatisticsDetails.jsp?u=' + userid + '&t=' + typeId + '&tn=' + typeName + '&min=' + min + '&max=' + max + '&n=' + full.n + '&nn=' + full.a + '">详情</a>';
                             }
                         },
                         {   "orderable": false, "targets": 3 },

@@ -88,6 +88,8 @@ public class ValueQuery extends HttpServlet {
 			int userId = Integer.parseInt((String)request.getParameter("UserID"));
 			int nodeId = Integer.parseInt((String)request.getParameter("NodeID"));
 			int typeValue = Integer.parseInt((String)request.getParameter("TypeValue"));
+			double min = Double.parseDouble((String)request.getParameter("TypeMin"));
+			double max = Double.parseDouble((String)request.getParameter("TypeMax"));
 			String date = (String)request.getParameter("Date");
 			
 			Value value = new Value();
@@ -104,7 +106,7 @@ public class ValueQuery extends HttpServlet {
 	        	return;
 			}
 			
-			String jsonValue = RePackage(typeValue, nodeId, vecValue);
+			String jsonValue = RePackage(typeValue, min, max, nodeId, vecValue);
 	        response.getWriter().println(getFormatResult("ok", jsonValue));
 	        return;
 		} catch (NumberFormatException e) {
@@ -116,10 +118,13 @@ public class ValueQuery extends HttpServlet {
 		response.getWriter().println(getFormatResult("ok", ""));
 	}
 	
-	private String RePackage(int typeID, int nodeID, Vector<Value> vecValue) {
+	private String RePackage(int typeID, double min, double max, int nodeID, Vector<Value> vecValue) {
 		try {
-			JSONStringer stringerValue = new JSONStringer();
-			stringerValue.array();
+			String xAxis = "\"[";
+			String yAxis = "\"[";
+			
+			JSONStringer stringeryAxis = new JSONStringer();
+			stringeryAxis.array();
 			
 			for (int i = 0; i < vecValue.size(); i++) {
 				Value value = vecValue.get(i);
@@ -152,20 +157,25 @@ public class ValueQuery extends HttpServlet {
 	        				continue;
 	        			}
 	        			
-	        			stringerValue.object()
-	        				.key("t").value((new SimpleDateFormat("HH:mm:ss")).format(value.getDate()))
-	        				.key("v").value(jsonValue.get("v"))
-	        				.endObject();
-	        			
+	        			xAxis += "'" + (new SimpleDateFormat("HH:mm:ss")).format(value.getDate()) + "',";
+	        			yAxis += jsonValue.get("v") + ",";
+	        			//stringerxAxis.value((new SimpleDateFormat("HH:mm:ss")).format(value.getDate()));
+	        			//stringeryAxis.value(jsonValue.get("v"));
 	        			break;
 	        		}
 				}
 			}
 			
-			stringerValue.endArray();
+			xAxis += "]\"";
+			yAxis += "]\"";
 			
 			JSONStringer stringer = new JSONStringer();
-			stringer.object().key("array").value(stringerValue.toString()).endObject();
+			stringer.object()
+				.key("min").value(min)
+				.key("max").value(max)
+				.key("x").value(xAxis)
+				.key("y").value(yAxis)
+				.endObject();
 			
 			return stringer.toString();
 		} catch (JSONException e) {
