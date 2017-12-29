@@ -152,7 +152,7 @@
             	        {
             	            name:'',
             	            type:'line',
-            	            data:[10, 20],
+            	            data:[],
             	            
             	            markLine: {
             	                data: [
@@ -210,9 +210,9 @@
             	var jsonValue = eval('(' + data + ')');
             	var min = jsonValue.min;
             	var max = jsonValue.max;
-
-           		option.xAxis.data = jsonValue.x;
-                //option.series[0].data = jsonValue.y;
+                
+                option.xAxis.data = eval('(' + jsonValue.x + ')');
+                option.series[0].data = eval('(' + jsonValue.y + ')');
             	
             	myChart.setOption(option);
             }

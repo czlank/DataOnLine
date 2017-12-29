@@ -120,8 +120,11 @@ public class ValueQuery extends HttpServlet {
 	
 	private String RePackage(int typeID, double min, double max, int nodeID, Vector<Value> vecValue) {
 		try {
-			String xAxis = "\"[";
-			String yAxis = "\"[";
+			JSONStringer xAxis = new JSONStringer();
+			JSONStringer yAxis = new JSONStringer();
+			
+			xAxis.array();
+			yAxis.array();
 			
 			JSONStringer stringeryAxis = new JSONStringer();
 			stringeryAxis.array();
@@ -157,17 +160,15 @@ public class ValueQuery extends HttpServlet {
 	        				continue;
 	        			}
 	        			
-	        			xAxis += "'" + (new SimpleDateFormat("HH:mm:ss")).format(value.getDate()) + "',";
-	        			yAxis += jsonValue.get("v") + ",";
-	        			//stringerxAxis.value((new SimpleDateFormat("HH:mm:ss")).format(value.getDate()));
-	        			//stringeryAxis.value(jsonValue.get("v"));
+	        			xAxis.value((new SimpleDateFormat("HH:mm:ss")).format(value.getDate()));
+	        			yAxis.value(jsonValue.get("v"));
 	        			break;
 	        		}
 				}
 			}
 			
-			xAxis += "]\"";
-			yAxis += "]\"";
+			xAxis.endArray();
+			yAxis.endArray();
 			
 			JSONStringer stringer = new JSONStringer();
 			stringer.object()
