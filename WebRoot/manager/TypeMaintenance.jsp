@@ -44,12 +44,12 @@
                             
                             <div class="form-group" id="typeMinGroup">
                                 <label>最小值</label>
-                                <input class="form-control" id="typeMin" name="typeMin" maxlength="32" title="最多可输入32个字符"/>
+                                <input class="form-control" id="typeMin" name="typeMin" maxlength="32" title="设置大于等于10000的数值将忽略最大值判断"/>
                             </div>
                             
                             <div class="form-group" id="typeMaxGroup">
                                 <label>最大值</label>
-                                <input class="form-control" id="typeMax" name="typeMax" maxlength="32" title="最多可输入32个字符"/>
+                                <input class="form-control" id="typeMax" name="typeMax" maxlength="32" title="设置小于等于-10000的数值将忽略最小值判断"/>
                             </div>
                             
                             <input type="hidden" name="typeId" id="typeId" />

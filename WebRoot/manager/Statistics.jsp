@@ -181,7 +181,7 @@
             }
             
             function createsubTabPanel(data, active, index) {
-            	var typeName = data.t;
+            	var typeName = data.tn;
             	
             	var navTabs = document.getElementById("navTabs");
             	var navSubTab = document.createElement('li');
@@ -248,7 +248,7 @@
                         {
                             targets: 3, // 第四列，从0开始
                             render: function (data, type, full, meta) {
-                                return '<a href="StatisticsDetails.jsp?u=' + userid + '&t=' + typeId + '&tn=' + typeName + '&min=' + min + '&max=' + max + '&n=' + full.n + '&nn=' + full.a + '">详情</a>';
+                            	return '<a href="StatisticsDetails.jsp?u=' + userid + '&t=' + typeId + '&tn=' + typeName + '&min=' + min + '&max=' + max + '&n=' + full.n + '&nn=' + full.a + '">详情</a>';
                             }
                         },
                         {   "orderable": false, "targets": 3 },

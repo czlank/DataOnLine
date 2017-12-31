@@ -113,56 +113,7 @@
             
             // eCharts
             var myChart = echarts.init(document.getElementById('chart-panel'), 'macarons');
-            // 指定图表的配置项和数据
-            var option = {
-            	    title: {
-            	        text: '',
-            	        subtext: ''
-            	    },
-            	    tooltip: {
-            	        trigger: 'axis'
-            	    },
-            	    legend: {
-            	        data:['']
-            	    },
-            	    toolbox: {
-            	        show: true,
-            	        feature: {
-            	            dataZoom: {
-            	                yAxisIndex: 'none'
-            	            },
-            	            dataView: {readOnly: false},
-            	            magicType: {type: ['line', 'bar']},
-            	            restore: {},
-            	            saveAsImage: {}
-            	        }
-            	    },
-            	    xAxis:  {
-            	        type: 'category',
-            	        boundaryGap: false,
-            	        data: []
-            	    },
-            	    yAxis: {
-            	        type: 'value',
-            	        axisLabel: {
-            	            formatter: '{value}'
-            	        }
-            	    },
-            	    series: [
-            	        {
-            	            name:'',
-            	            type:'line',
-            	            data:[],
-            	            
-            	            markLine: {
-            	                data: [
-            	                    {yAxis: 8},
-            	                    {yAxis: 3}
-            	                ]
-            	            }
-            	        }
-            	    ]
-            	};
+            var option = setOption(${param.min}, ${param.max});
             
             function queryDetails() {
             	parent.showLoading();
@@ -173,8 +124,6 @@
                     	actionValue : "detail",
                         UserID : '${param.u}',
                         TypeValue : '${param.t}',
-                        TypeMin : '${param.min}',
-                        TypeMax : '${param.max}',
                         NodeID : '${param.n}',
                         Date : $("#querydate").val(),
                     },
@@ -208,13 +157,183 @@
             
             function showData(data) {
             	var jsonValue = eval('(' + data + ')');
-            	var min = jsonValue.min;
-            	var max = jsonValue.max;
-                
+
                 option.xAxis.data = eval('(' + jsonValue.x + ')');
                 option.series[0].data = eval('(' + jsonValue.y + ')');
-            	
+                
             	myChart.setOption(option);
+            }
+            
+            function setOption(min, max) {
+            	if (min != 0 || max != 0) {
+            	    if ((max < 10000) && (min > -10000)) {
+            	    	return setRangeOption(min, max);
+            	    } else if (max >= 10000) {
+            	    	return setLevelOption(min);
+            	    } else if (min <= -10000) {
+            	    	return setLevelOption(max);
+            	    }
+                } else {
+                	return setNormalOption();	
+                }
+            }
+            
+            function setRangeOption(min, max) {
+            	var option = {
+                        title: {
+                            text: '',
+                            subtext: ''
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data:['']
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                dataView: {readOnly: false},
+                                magicType: {type: ['line', 'bar']},
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis:  {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: []
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLabel: {
+                                formatter: '{value}'
+                            }
+                        },
+                        series: [
+                            {
+                                name:'',
+                                type:'line',
+                                data:[],
+                                
+                                markLine: {
+                                    data: [
+                                        {yAxis:min},
+                                        {yAxis:max}
+                                    ]
+                                }
+                            }
+                        ]
+                    };
+            	
+            	return option;
+            }
+            
+            function setLevelOption(level) {
+            	var option = {
+                        title: {
+                            text: '',
+                            subtext: ''
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data:['']
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                dataView: {readOnly: false},
+                                magicType: {type: ['line', 'bar']},
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis:  {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: []
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLabel: {
+                                formatter: '{value}'
+                            }
+                        },
+                        series: [
+                            {
+                                name:'',
+                                type:'line',
+                                data:[],
+                                
+                                markLine: {
+                                    data: [
+                                        {yAxis:level}
+                                    ]
+                                }
+                            }
+                        ]
+                    };
+            	
+            	return option;
+            }
+            
+            function setNormalOption() {
+            	var option = {
+                        title: {
+                            text: '',
+                            subtext: ''
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data:['']
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                dataView: {readOnly: false},
+                                magicType: {type: ['line', 'bar']},
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis:  {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: []
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisLabel: {
+                                formatter: '{value}'
+                            }
+                        },
+                        series: [
+                            {
+                                name:'',
+                                type:'line',
+                                data:[],
+                                
+                                markLine: {
+                                    data: []
+                                }
+                            }
+                        ]
+                    };
+            	
+            	return option;
             }
         </script>
     </body>

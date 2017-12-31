@@ -88,8 +88,6 @@ public class ValueQuery extends HttpServlet {
 			int userId = Integer.parseInt((String)request.getParameter("UserID"));
 			int nodeId = Integer.parseInt((String)request.getParameter("NodeID"));
 			int typeValue = Integer.parseInt((String)request.getParameter("TypeValue"));
-			double min = Double.parseDouble((String)request.getParameter("TypeMin"));
-			double max = Double.parseDouble((String)request.getParameter("TypeMax"));
 			String date = (String)request.getParameter("Date");
 			
 			Value value = new Value();
@@ -106,7 +104,7 @@ public class ValueQuery extends HttpServlet {
 	        	return;
 			}
 			
-			String jsonValue = RePackage(typeValue, min, max, nodeId, vecValue);
+			String jsonValue = RePackage(typeValue, nodeId, vecValue);
 	        response.getWriter().println(getFormatResult("ok", jsonValue));
 	        return;
 		} catch (NumberFormatException e) {
@@ -118,7 +116,7 @@ public class ValueQuery extends HttpServlet {
 		response.getWriter().println(getFormatResult("ok", ""));
 	}
 	
-	private String RePackage(int typeID, double min, double max, int nodeID, Vector<Value> vecValue) {
+	private String RePackage(int typeID, int nodeID, Vector<Value> vecValue) {
 		try {
 			JSONStringer xAxis = new JSONStringer();
 			JSONStringer yAxis = new JSONStringer();
@@ -172,8 +170,6 @@ public class ValueQuery extends HttpServlet {
 			
 			JSONStringer stringer = new JSONStringer();
 			stringer.object()
-				.key("min").value(min)
-				.key("max").value(max)
 				.key("x").value(xAxis)
 				.key("y").value(yAxis)
 				.endObject();
