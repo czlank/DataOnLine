@@ -251,6 +251,16 @@
                             	return '<a href="StatisticsDetails.jsp?u=' + userid + '&t=' + typeId + '&tn=' + typeName + '&min=' + min + '&max=' + max + '&n=' + full.n + '&nn=' + full.a + '">详情</a>';
                             }
                         },
+                        {
+                        	targets: 2,
+                        	render: function (data, type, full, meta) {
+                        		if ((full.v <= max) && (full.v >= min)) {
+                        			return full.v;
+                        		} else {
+                        			return '<span style="color:#FF0000;">' + full.v + '</span>';
+                        		}
+                        	}
+                        },
                         {   "orderable": false, "targets": 3 },
                         {   className: "tablecenter-colum", "targets": [0,1,2,3] },
                         {   "orderable": true, "targets": 0 }
